@@ -1,0 +1,15 @@
+<div class="libro-list">
+  <h2>📚 Lista de Libros</h2>
+
+  <div *ngIf="loading">Cargando libros...</div>
+
+  <div *ngIf="!loading && libros.length === 0">No hay libros disponibles</div>
+
+  <div class="libros-grid" *ngIf="!loading && libros.length > 0">
+    <div class="libro-card" *ngFor="let libro of libros">
+      <h3>{{ libro.titulo }}</h3>
+      <p>{{ libro.descripcion }}</p>
+      <span class="estado">{{ libro.estadoDescripcion }}</span>
+    </div>
+  </div>
+</div>

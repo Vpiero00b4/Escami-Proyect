@@ -1,0 +1,109 @@
+<!-- Header Principal -->
+<header class="header">
+  <div class="header-container">
+    <!-- Botón + Logo -->
+    <div class="header-left">
+      <button class="menu-btn" (click)="toggleSidebar()">
+        @if (!isSidebarOpen) {
+          <span>☰</span>
+        } @else {
+          <span>✖</span>
+        }
+      </button>
+      <a routerLink="/" class="logo">🛍️ Marketplace</a>
+    </div>
+
+    <!-- Barra de búsqueda -->
+    <div class="search-bar">
+      <input type="text" class="search-input" placeholder="Buscar productos..." />
+      <button class="search-btn"><span class="icon">🔍</span></button>
+    </div>
+
+    <!-- Acciones -->
+    <div class="header-actions">
+      <a routerLink="/login" class="header-btn">👤 Iniciar Sesión</a>
+      <a routerLink="/cart" class="header-btn cart-btn">
+        🛒 Carrito
+        <span class="cart-badge">3</span>
+      </a>
+    </div>
+  </div>
+</header>
+
+<!-- Sidebar -->
+<div class="sidebar" [class.open]="isSidebarOpen">
+  <button class="close-btn" (click)="toggleSidebar()">✖</button>
+  
+  <ul class="sidebar-nav">
+    <li><a routerLink="/" (click)="toggleSidebar()">🏠 Inicio</a></li>
+
+    <!-- 📚 LIBROS dinámico -->
+    <li class="dropdown">
+      <div class="dropdown-header" (click)="toggleEmpresa('libros')">
+        <span>📚 Libros</span>
+        <span class="arrow" [class.open]="empresaAbierta === 'libros'">▶</span>
+      </div>
+      <ul class="dropdown-menu" *ngIf="empresaAbierta === 'libros'">
+        <li *ngFor="let cat of categorias" class="dropdown-sub">
+          <div class="sub-header" (click)="toggleCategoria(cat.idCategoria)">
+            {{ cat.categoria1 }}
+            <span class="arrow" [class.open]="categoriaAbierta === cat.idCategoria">▶</span>
+          </div>
+          <ul class="dropdown-submenu" *ngIf="categoriaAbierta === cat.idCategoria">
+            <li *ngFor="let sub of getSubcategoriasByCategoria(cat.idCategoria)">
+              <a [routerLink]="['/products/libros', cat.categoria1.toLowerCase(), sub.descripcion.toLowerCase()]"
+                 (click)="toggleSidebar()">
+                {{ sub.descripcion }}
+              </a>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+
+    <!-- 👟 Zapatillas -->
+    <li class="dropdown">
+      <div class="dropdown-header" (click)="toggleEmpresa('zapatillas')">
+        <span>👟 Zapatillas</span>
+        <span class="arrow" [class.open]="empresaAbierta === 'zapatillas'">▶</span>
+      </div>
+      <ul class="dropdown-menu" *ngIf="empresaAbierta === 'zapatillas'">
+        <li><a routerLink="/products/zapatillas/deportivas" (click)="toggleSidebar()">Deportivas</a></li>
+        <li><a routerLink="/products/zapatillas/casual" (click)="toggleSidebar()">Casuales</a></li>
+      </ul>
+    </li>
+
+    <!-- 🐾 Mascotas -->
+    <li class="dropdown">
+      <div class="dropdown-header" (click)="toggleEmpresa('mascotas')">
+        <span>🐾 Mascotas</span>
+        <span class="arrow" [class.open]="empresaAbierta === 'mascotas'">▶</span>
+      </div>
+      <ul class="dropdown-menu" *ngIf="empresaAbierta === 'mascotas'">
+        <li><a routerLink="/products/mascotas/alimentos" (click)="toggleSidebar()">Alimentos</a></li>
+        <li><a routerLink="/products/mascotas/accesorios" (click)="toggleSidebar()">Accesorios</a></li>
+        <li><a routerLink="/products/mascotas/juguetes" (click)="toggleSidebar()">Juguetes</a></li>
+      </ul>
+    </li>
+
+    <!-- 🛡️ Seguridad -->
+    <li class="dropdown">
+      <div class="dropdown-header" (click)="toggleEmpresa('seguridad')">
+        <span>🛡️ Seguridad</span>
+        <span class="arrow" [class.open]="empresaAbierta === 'seguridad'">▶</span>
+      </div>
+      <ul class="dropdown-menu" *ngIf="empresaAbierta === 'seguridad'">
+        <li><a routerLink="/products/seguridad/camaras" (click)="toggleSidebar()">Cámaras</a></li>
+        <li><a routerLink="/products/seguridad/cerraduras" (click)="toggleSidebar()">Cerraduras</a></li>
+        <li><a routerLink="/products/seguridad/alarmas" (click)="toggleSidebar()">Alarmas</a></li>
+      </ul>
+    </li>
+
+    <li><a routerLink="/offers" (click)="toggleSidebar()">🔥 Ofertas</a></li>
+  </ul>
+</div>
+
+<!-- Overlay -->
+@if (isSidebarOpen) {
+  <div class="overlay" (click)="toggleSidebar()"></div>
+}

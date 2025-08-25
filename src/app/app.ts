@@ -1,12 +1,17 @@
+// app.component.ts
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
+import { Footer } from '../components/core/footer/footer';
+import { LibroList } from './components/features/libros/libro-list/libro-list';
+import { LibroService } from '../services/libros/api.service';
+import { Header } from '../components/core/header/header';
+import { MantLibroRegisterComponent } from './components/features/mant-libro-register/mant-libro-register';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet],
+  standalone: true,
+  imports: [RouterOutlet, Header, Footer],  // 👈 sin HttpClientModule
   templateUrl: './app.html',
-  styleUrl: './app.css'
+  styleUrls: ['./app.css'],
 })
-export class App {
-  protected title = 'ali-proyect-esca2';
-}
+export class App {}
