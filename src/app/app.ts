@@ -3,7 +3,6 @@ import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { Footer } from '../components/core/footer/footer';
 import { LibroList } from './components/features/libros/libro-list/libro-list';
-import { LibroService } from '../services/libros/api.service';
 import { Header } from '../components/core/header/header';
 import { MantLibroRegisterComponent } from './components/features/mant-libro-register/mant-libro-register';
 
@@ -11,7 +10,7 @@ import { MantLibroRegisterComponent } from './components/features/mant-libro-reg
   selector: 'app-root',
   standalone: true,
   imports: [RouterOutlet, Header, Footer],  // 👈 sin HttpClientModule
-  templateUrl: './app.html',
+  templateUrl:'./app.html',
   styleUrls: ['./app.css'],
 })
 export class App {}

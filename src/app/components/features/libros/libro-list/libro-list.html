@@ -1,15 +1,39 @@
 <div class="libro-list">
-  <h2>📚 Lista de Libros</h2>
-
+  <h2>📚 Catálogo de Libros</h2>
+  
+  <!-- Estado de carga -->
   <div *ngIf="loading">Cargando libros...</div>
-
   <div *ngIf="!loading && libros.length === 0">No hay libros disponibles</div>
-
+  
+  <!-- Grid de libros -->
   <div class="libros-grid" *ngIf="!loading && libros.length > 0">
     <div class="libro-card" *ngFor="let libro of libros">
-      <h3>{{ libro.titulo }}</h3>
-      <p>{{ libro.descripcion }}</p>
-      <span class="estado">{{ libro.estadoDescripcion }}</span>
+      
+      <!-- Info del libro -->
+      <div class="libro-info">
+        <h3>{{ libro.titulo || 'Título no disponible' }}</h3>
+        
+        <!-- Mostrar autores -->
+        <p class="autor">
+          Autor(es): {{ obtenerNombresAutores(libro) }}
+        </p>
+        
+        <p class="descripcion">{{ libro.descripcion || 'Sin descripción' }}</p>
+        
+        <p class="precio">💲 {{ libro.precioVenta | currency:'USD' }}</p>
+        
+        <!-- Stock -->
+        <p class="stock" [ngClass]="obtenerClaseStock(libro)">
+          {{ obtenerTextoStock(libro) }}
+        </p>
+        
+        <!-- Botón de agregar -->
+        <button class="btn-agregar" 
+                [disabled]="!estaDisponible(libro)"
+                (click)="agregarAlCarrito(libro)">
+          🛒 Agregar al carrito
+        </button>
+      </div>
     </div>
   </div>
 </div>

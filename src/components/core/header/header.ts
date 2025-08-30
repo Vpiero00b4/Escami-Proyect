@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { Categoria } from '../../../models/libros/categoria';
 import { Subcategoria } from '../../../models/libros/subcategoria';
-import { CategoriaService } from '../../../services/libros/categorias.service';
+import { CategoriaService } from '../../services/services-tienda/libros/categorias.service';
 
 @Component({
   selector: 'app-header',
