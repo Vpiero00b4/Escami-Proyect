@@ -1,7 +1,7 @@
 <div class="calzado-list">
   <h2>👟 Catálogo de Calzados</h2>
   
-  <div *ngIf="loading">Cargando calzado...</div>
+  <div *ngIf="loading">Cargando calzados...</div>
   <div *ngIf="!loading && calzados.length === 0">No hay calzados disponibles</div>
   
   <div class="calzados-grid" *ngIf="!loading && calzados.length > 0">
