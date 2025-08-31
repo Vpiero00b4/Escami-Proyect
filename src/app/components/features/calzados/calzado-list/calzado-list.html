@@ -1,0 +1,33 @@
+<div class="calzado-list">
+  <h2>👟 Catálogo de Calzados</h2>
+  
+  <div *ngIf="loading">Cargando calzado...</div>
+  <div *ngIf="!loading && calzados.length === 0">No hay calzados disponibles</div>
+  
+  <div class="calzados-grid" *ngIf="!loading && calzados.length > 0">
+    <div class="calzado-card" *ngFor="let calzado of calzados">
+      
+      <div class="calzado-info">
+        <h3>{{ calzado.nombre || 'Nombre no disponible' }}</h3>
+        
+        <p class="marca">
+          Marca: {{ calzado.marcas || 'Marca no disponible' }}
+        </p>
+        
+        <p class="talla">Talla: {{ calzado.talla || 'Talla no disponible' }}</p>
+        
+        <p class="precio">💲 {{ calzado.precioVenta | currency:'USD' }}</p>
+        
+        <p class="stock" [ngClass]="obtenerClaseStock(calzado)">
+          {{ obtenerTextoStock(calzado) }}
+        </p>
+        
+        <button class="btn-agregar" 
+                [disabled]="!estaDisponible(calzado)"
+                (click)="agregarAlCarrito(calzado)">
+          🛒 Agregar al carrito
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

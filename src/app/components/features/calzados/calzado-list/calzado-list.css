@@ -1,0 +1,42 @@
+.calzado-list {
+  padding: 1rem;
+}
+
+.calzados-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 1rem;
+}
+
+.calzado-card {
+  background: #fff;
+  border-radius: 8px;
+  padding: 1rem;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  text-align: center;
+}
+
+.calzado-card img {
+  max-width: 100%;
+  height: 180px;
+  object-fit: cover;
+  border-radius: 4px;
+}
+
+.stock {
+  display: block;
+  margin-top: 0.5rem;
+  font-weight: bold;
+}
+
+.stock-agotado {
+  color: red;
+}
+
+.stock-bajo {
+  color: orange;
+}
+
+.stock-alto {
+  color: green;
+}

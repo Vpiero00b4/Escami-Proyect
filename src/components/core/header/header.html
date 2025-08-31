@@ -61,17 +61,56 @@
       </ul>
     </li>
 
-    <!-- 👟 Zapatillas -->
+    <!-- 👟 Calzados -->
     <li class="dropdown">
-      <div class="dropdown-header" (click)="toggleEmpresa('zapatillas')">
-        <span>👟 Zapatillas</span>
-        <span class="arrow" [class.open]="empresaAbierta === 'zapatillas'">▶</span>
+  <div class="dropdown-header" (click)="toggleEmpresa('calzados')">
+    <span>👟 Calzados</span>
+    <span class="arrow" [class.open]="empresaAbierta === 'calzados'">▶</span>
+  </div>
+  <ul class="dropdown-menu" *ngIf="empresaAbierta === 'calzados'">
+    <li class="dropdown-sub">
+      <div class="sub-header" (click)="toggleCategoria(1)">
+        Hombres
+        <span class="arrow" [class.open]="categoriaAbierta === 1">▶</span>
       </div>
-      <ul class="dropdown-menu" *ngIf="empresaAbierta === 'zapatillas'">
-        <li><a routerLink="/products/zapatillas/deportivas" (click)="toggleSidebar()">Deportivas</a></li>
-        <li><a routerLink="/products/zapatillas/casual" (click)="toggleSidebar()">Casuales</a></li>
+      <ul class="dropdown-submenu" *ngIf="categoriaAbierta === 1">
+        <li><a routerLink="/products/calzados/hombres/i-run" (click)="toggleSidebar()">I-RUN</a></li>
+        <li><a routerLink="/products/calzados/hombres/nike" (click)="toggleSidebar()">Nike</a></li>
+        <li><a routerLink="/products/calzados/hombres/adidas" (click)="toggleSidebar()">Adidas</a></li>
+        <li><a routerLink="/products/calzados/hombres/puma" (click)="toggleSidebar()">Puma</a></li>
+        <li><a routerLink="/products/calzados/hombres/reebok" (click)="toggleSidebar()">Reebok</a></li>
       </ul>
     </li>
+
+    <li class="dropdown-sub">
+      <div class="sub-header" (click)="toggleCategoria(2)">
+        Mujeres
+        <span class="arrow" [class.open]="categoriaAbierta === 2">▶</span>
+      </div>
+      <ul class="dropdown-submenu" *ngIf="categoriaAbierta === 2">
+        <li><a routerLink="/products/calzados/mujeres/i-run" (click)="toggleSidebar()">I-RUN</a></li>
+        <li><a routerLink="/products/calzados/mujeres/nike" (click)="toggleSidebar()">Nike</a></li>
+        <li><a routerLink="/products/calzados/mujeres/adidas" (click)="toggleSidebar()">Adidas</a></li>
+        <li><a routerLink="/products/calzados/mujeres/puma" (click)="toggleSidebar()">Puma</a></li>
+        <li><a routerLink="/products/calzados/mujeres/reebok" (click)="toggleSidebar()">Reebok</a></li>
+      </ul>
+    </li>
+
+    <li class="dropdown-sub">
+      <div class="sub-header" (click)="toggleCategoria(3)">
+        Infantil
+        <span class="arrow" [class.open]="categoriaAbierta === 3">▶</span>
+      </div>
+      <ul class="dropdown-submenu" *ngIf="categoriaAbierta === 3">
+        <li><a routerLink="/products/calzados/infantil/i-run" (click)="toggleSidebar()">I-RUN</a></li>
+        <li><a routerLink="/products/calzados/infantil/nike" (click)="toggleSidebar()">Nike</a></li>
+        <li><a routerLink="/products/calzados/infantil/adidas" (click)="toggleSidebar()">Adidas</a></li>
+        <li><a routerLink="/products/calzados/infantil/puma" (click)="toggleSidebar()">Puma</a></li>
+        <li><a routerLink="/products/calzados/infantil/reebok" (click)="toggleSidebar()">Reebok</a></li>
+      </ul>
+    </li>
+  </ul>
+</li>
 
     <!-- 🐾 Mascotas -->
     <li class="dropdown">
