@@ -1,10 +1,19 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+//libro-list.ts
+import { Component, OnInit, Output, EventEmitter, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Libro } from '../../../../../models/libros/libro';
 import { LibroService } from '../../../../../components/services/services-tienda/libros/api.service';
 import { CartService } from '../../../../../components/services/cart.service.ts';
+import { ActivatedRoute } from '@angular/router';
 
 // Define aquí la interfaz CartItem mínima que usa tu CartService
+export interface PaginatedResponse<T> {
+  data: T[];
+  total: number;
+  page: number;
+  pageSize: number;
+}
+
 export interface CartItemLibro {
   idLibro: number;
   titulo: string;
@@ -58,33 +67,50 @@ export interface ItemCarrito {
 })
 export class LibroList implements OnInit {
 
-  // Nuevo Output: emite el CartItem
+  // Properties
   @Output() addToCart = new EventEmitter<CartItem>();
-
   libros: Libro[] = [];
-  loading = true;
+  loading = false;
+   idCategoria!: number;
+  idSubcategoria!: number;
 
-  constructor(private libroService: LibroService, private cartService: CartService) { }
+  // Constructor
+  constructor(
+    private cartService: CartService,
+    private route: ActivatedRoute,
+    private libroService: LibroService
+  ) {}
 
-  ngOnInit(): void {
-    this.cargarLibros();
+
+
+ ngOnInit() {
+    this.route.paramMap.subscribe(params => {
+      this.idCategoria = Number(params.get('idCategoria'));
+      this.idSubcategoria = Number(params.get('idSubcategoria'));
+
+      // ✅ Filtra según los parámetros de ruta
+      if (this.idSubcategoria) {
+        this.cargarLibrosPorSubcategoria(this.idSubcategoria);
+      } else if (this.idCategoria) {
+        this.cargarLibrosPorCategoria(this.idCategoria);
+      } else {
+        this.cargarLibros(); // fallback, todos los libros
+      }
+    });
   }
-  // Método para agregar un producto específico al carrito
-  agregarAlCarrito(libro: Libro) {
+
+  // ✅ PUBLIC METHODS - Cart
+  agregarAlCarrito(libro: Libro): void {
     if (libro.stock <= 0) return;
     this.cartService.addLibro(libro);
     this.cartService.abrirCarro();
   }
 
-
-
+  // ✅ PUBLIC METHODS - UI Helpers
   onImageError(event: Event): void {
     (event.target as HTMLImageElement).src = 'assets/img/no-disponible.png';
   }
 
-
-
-  // Helpers de template
   tieneAutores(libro: Libro): boolean {
     return !!(libro.autores && libro.autores.length > 0);
   }
@@ -107,6 +133,17 @@ export class LibroList implements OnInit {
     return 'stock-alto';
   }
 
+  obtenerClaseStockTailwind(libro: Libro): string {
+    const stock = this.obtenerStock(libro);
+    if (stock > 10) {
+      return 'bg-green-100 text-green-800'; // En stock
+    } else if (stock > 0 && stock <= 10) {
+      return 'bg-yellow-100 text-yellow-800'; // Stock bajo
+    } else {
+      return 'bg-red-100 text-red-800'; // Sin stock
+    }
+  }
+
   obtenerTextoStock(libro: Libro): string {
     const stock = this.obtenerStock(libro);
     return stock > 0 ? `${stock} disponibles` : 'Agotado';
@@ -116,7 +153,7 @@ export class LibroList implements OnInit {
     return this.obtenerStock(libro) > 0;
   }
 
-  // Private
+  // ✅ PRIVATE METHODS - Data Loading
   private cargarLibros(): void {
     this.loading = true;
     this.libroService.getLibrosConAutoresPrecioStock().subscribe({
@@ -131,6 +168,34 @@ export class LibroList implements OnInit {
     });
   }
 
+  private cargarLibrosFiltrados(
+    categoria: string | null,
+    subcategoria: string | null,
+    idSub: string | null
+  ): void {
+    this.loading = true;
+
+    const idCategoria = idSub ? Number(idSub) : null;
+    if (!idCategoria) {
+      console.warn('⚠️ No se recibió un idSubcategoria válido');
+      this.libros = [];
+      this.loading = false;
+      return;
+    }
+
+    this.libroService.getLibrosPorCategoria(idCategoria).subscribe({
+      next: (res: Libro[]) => {
+        this.libros = res;
+        this.loading = false;
+      },
+      error: (err: any) => {
+        console.error('❌ Error al cargar libros por categoría:', err);
+        this.loading = false;
+      }
+    });
+  }
+
+  // ✅ PRIVATE METHODS - Utilities
   private mapLibroToCartItem(libro: Libro): CartItem {
     const autor = this.tieneAutores(libro)
       ? `${libro.autores![0].nombre} ${libro.autores![0].apellido}`
@@ -145,7 +210,6 @@ export class LibroList implements OnInit {
       cantidad: 1,
       stock: libro.stock ?? 0,
       imagen: (libro as any).imagen ?? undefined,
-
       // opcionales
       isbn: (libro as any).isbn ?? '',
       tamanno: (libro as any).tamanno ?? '',
@@ -163,14 +227,32 @@ export class LibroList implements OnInit {
       data: cartItemLibro
     };
   }
-
-  obtenerClaseStockTailwind(libro: any): string {
-    if (libro.stock > 10) {
-      return 'bg-green-100 text-green-800'; // En stock
-    } else if (libro.stock > 0 && libro.stock <= 10) {
-      return 'bg-yellow-100 text-yellow-800'; // Stock bajo
-    } else {
-      return 'bg-red-100 text-red-800'; // Sin stock
+private cargarLibrosPorSubcategoria(idSub: number): void {
+  this.loading = true;
+  this.libroService.getLibrosPorSubcategoria(idSub).subscribe({
+    next: (res: Libro[]) => {
+      this.libros = res;
+      this.loading = false;
+    },
+    error: err => {
+      console.error('❌ Error al cargar libros por subcategoría:', err);
+      this.loading = false;
     }
-  }
+  });
+}
+
+private cargarLibrosPorCategoria(idCategoria: number): void {
+  this.loading = true;
+  this.libroService.getLibrosPorCategoria(idCategoria).subscribe({
+    next: (res: Libro[]) => {
+      this.libros = res;
+      this.loading = false;
+    },
+    error: err => {
+      console.error('❌ Error al cargar libros por categoría:', err);
+      this.loading = false;
+    }
+  });
+}
+
 }

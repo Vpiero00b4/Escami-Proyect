@@ -71,6 +71,12 @@ export class LibroService {
     );
   }
 
+getLibrosPorSubcategoria(idSub: number): Observable<Libro[]> {
+  return this.http.get<Libro[]>(`${this.baseUrl}/Subcategoria/librosbysubcategoria/${idSub}`);
+}
+
+//https://localhost:7143/Subcategoria/librosbysubcategoria/1
+
   // Public methods - Paginación
   getLibrosPaginados(page: number = 1, pageSize: number = 10): Observable<PaginatedResponse<Libro>> {
     const params = new HttpParams()
@@ -130,23 +136,12 @@ export class LibroService {
     return this.http.get<PaginatedResponse<Libro>>(`${this.baseUrl}/Libro/Buscar`, { params });
   }
 
-  getLibrosPorCategoria(categoriaId: number, page: number = 1, pageSize: number = 10): Observable<PaginatedResponse<Libro>> {
-    const params = new HttpParams()
-      .set('categoriaId', categoriaId.toString())
-      .set('page', page.toString())
-      .set('pageSize', pageSize.toString());
+getLibrosPorCategoria(id: number): Observable<Libro[]> {
+  return this.http.get<Libro[]>(`/api/libros/categoria/${id}`);
+}
 
-    return this.http.get<PaginatedResponse<Libro>>(`${this.baseUrl}/Libro/Categoria`, { params });
-  }
 
-  getLibrosPorSubcategoria(subcategoriaId: number, page: number = 1, pageSize: number = 10): Observable<PaginatedResponse<Libro>> {
-    const params = new HttpParams()
-      .set('subcategoriaId', subcategoriaId.toString())
-      .set('page', page.toString())
-      .set('pageSize', pageSize.toString());
 
-    return this.http.get<PaginatedResponse<Libro>>(`${this.baseUrl}/Libro/Subcategoria`, { params });
-  }
 
   // Private methods
   private getAutoresByLibroId(libroId: number): Observable<Autor[]> {

@@ -1,14 +1,13 @@
-
 import { Component, inject, OnInit } from '@angular/core';
-import { CommonModule, NgFor } from '@angular/common';
-import { ActivatedRoute, RouterModule } from '@angular/router';
+import { CommonModule } from '@angular/common';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 
 import { Categoria } from '../../../models/libros/categoria';
 import { Subcategoria } from '../../../models/libros/subcategoria';
 import { CategoriaService } from '../../services/services-tienda/libros/categorias.service';
-import { macService } from '../../services/services-tienda/mac/mac.service';
 import { MacCategoria } from '../../../models/mac/macCategoria';
 import { CartService } from '../../services/cart.service.ts';
+import { macService } from '../../services/services-tienda/mac/mac.service';
 
 declare const bootstrap: any;
 
@@ -25,7 +24,7 @@ export class HeaderComponent implements OnInit {
   empresaAbierta: string | null = null;
   categoriaAbierta: number | null = null;
   macAbiertaCat: string | null = null;
-  isCartOpen = false;
+
   // Categorías y subcategorías
   categorias: Categoria[] = [];
   subcategorias: Subcategoria[] = [];
@@ -35,11 +34,11 @@ export class HeaderComponent implements OnInit {
 
   // Servicios
   private categoriaService = inject(CategoriaService);
-  private macService = inject(macService);
+  // private macService = inject(MacService);
   private route = inject(ActivatedRoute);
-  public carroService = inject(CartService);
-  cart = inject(CartService); // Cambiado a public para usar en template
-
+  private router = inject(Router);
+  public cartService = inject(CartService); // público para usar en el template
+  public macService = inject(macService);
   ngOnInit(): void {
     this.cargarCategorias();
     this.cargarSubcategorias();
@@ -65,6 +64,14 @@ export class HeaderComponent implements OnInit {
     });
   }
 
+  navegarASubcategoria(idCategoria: number, idSubcategoria: number) {
+    this.router.navigate([
+      '/home/libros/subcategoria',
+      idSubcategoria
+    ]);
+    this.toggleSidebar(); // cerrar sidebar al navegar
+  }
+
   getSubcategoriasByCategoria(idCategoria: number): Subcategoria[] {
     return this.subcategorias.filter(s => s.idCategoria === idCategoria);
   }
@@ -72,9 +79,11 @@ export class HeaderComponent implements OnInit {
   toggleSidebar() {
     this.isSidebarOpen = !this.isSidebarOpen;
   }
+
   toggleCart() {
-    this.carroService.abrirCarro();
+    this.cartService.abrirCarro();
   }
+
   toggleEmpresa(nombre: string) {
     this.empresaAbierta = this.empresaAbierta === nombre ? null : nombre;
     this.categoriaAbierta = null;
@@ -86,15 +95,13 @@ export class HeaderComponent implements OnInit {
   }
 
   /*** Manejo MAC ***/
-  cargarMacCategorias() {
-    this.macService.getCategorias().subscribe(res => {
-      this.maccategorias = Array.isArray(res) ? res : [res];
-    });
-  }
+    cargarMacCategorias() {
+      this.macService.getCategorias().subscribe(res => {
+        this.maccategorias = Array.isArray(res) ? res : [res];
+      });
+    }
 
   /*** Carrito ***/
-
-
   abrirCarrito() {
     const offcanvasEl = document.getElementById('cartOffcanvas');
     if (offcanvasEl && typeof bootstrap?.Offcanvas === 'function') {

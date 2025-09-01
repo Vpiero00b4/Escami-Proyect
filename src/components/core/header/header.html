@@ -95,11 +95,11 @@
           </div>
           <ul class="dropdown-submenu ml-4 mt-1 space-y-1" *ngIf="categoriaAbierta === cat.idCategoria">
             <li *ngFor="let sub of getSubcategoriasByCategoria(cat.idCategoria)">
-              <a [routerLink]="['/macProductos', cat.categoria1.toLowerCase(), sub.descripcion.toLowerCase()]"
-                (click)="toggleSidebar()"
-                class="block p-2 rounded-lg hover:bg-blue-500/20 transition-all duration-300 text-sm text-gray-300 hover:text-white border-l-2 border-transparent hover:border-blue-400">
-                {{ sub.descripcion }}
-              </a>
+<a (click)="navegarASubcategoria(cat.idCategoria, sub.id)"
+   class="block p-2 rounded-lg hover:bg-blue-500/20 transition-all duration-300 text-sm text-gray-300 hover:text-white border-l-2 border-transparent hover:border-blue-400">
+   {{ sub.descripcion }}
+</a>
+
             </li>
           </ul>
         </li>
