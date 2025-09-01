@@ -133,17 +133,6 @@ export class LibroList implements OnInit {
     return 'stock-alto';
   }
 
-  obtenerClaseStockTailwind(libro: Libro): string {
-    const stock = this.obtenerStock(libro);
-    if (stock > 10) {
-      return 'bg-green-100 text-green-800'; // En stock
-    } else if (stock > 0 && stock <= 10) {
-      return 'bg-yellow-100 text-yellow-800'; // Stock bajo
-    } else {
-      return 'bg-red-100 text-red-800'; // Sin stock
-    }
-  }
-
   obtenerTextoStock(libro: Libro): string {
     const stock = this.obtenerStock(libro);
     return stock > 0 ? `${stock} disponibles` : 'Agotado';
@@ -272,20 +261,22 @@ export class LibroList implements OnInit {
       return 'bg-yellow-100 text-yellow-800'; // Stock bajo
     } else {
       return 'bg-red-100 text-red-800'; // Sin stock
-private cargarLibrosPorSubcategoria(idSub: number): void {
-  this.loading = true;
-  this.libroService.getLibrosPorSubcategoria(idSub).subscribe({
-    next: (res: Libro[]) => {
-      this.libros = res;
-      this.loading = false;
-    },
-    error: err => {
-      console.error('❌ Error al cargar libros por subcategoría:', err);
-      this.loading = false;
     }
-  });
-}
+  }
 
+  private cargarLibrosPorSubcategoria(idSub: number): void {
+      this.loading = true;
+      this.libroService.getLibrosPorSubcategoria(idSub).subscribe({
+        next: (res: Libro[]) => {
+          this.libros = res;
+          this.loading = false;
+        },
+        error: err => {
+          console.error('❌ Error al cargar libros por subcategoría:', err);
+          this.loading = false;
+        }
+      });
+    }
 private cargarLibrosPorCategoria(idCategoria: number): void {
   this.loading = true;
   this.libroService.getLibrosPorCategoria(idCategoria).subscribe({
