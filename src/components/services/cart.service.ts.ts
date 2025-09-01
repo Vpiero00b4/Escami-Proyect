@@ -9,7 +9,6 @@ export interface CartItem {
   cantidad: number;
   stock: number;
   imagen?: string;
-  // Campos opcionales que pueden ayudar a completar el DTO backend:
   isbn?: string;
   tamanno?: string;
   condicion?: string;
@@ -41,7 +40,6 @@ export class CartService {
   add(item: CartItem) {
     const existing = this._items.find(i => i.idLibro === item.idLibro);
     if (existing) {
-      // controla stock
       const nuevaCantidad = Math.min(existing.cantidad + item.cantidad, existing.stock);
       existing.cantidad = nuevaCantidad;
       this._selectedItem = existing;

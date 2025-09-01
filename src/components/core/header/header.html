@@ -21,12 +21,17 @@
 
     <!-- Acciones -->
     <div class="header-actions">
-      <a routerLink="/login" class="header-btn">👤 Iniciar Sesión</a>
-      <a routerLink="/cart" class="header-btn cart-btn">
-        🛒 Carrito
-        <span class="cart-badge">3</span>
-      </a>
-    </div>
+        <a routerLink="/login" class="header-btn">👤 Iniciar Sesión</a>
+        <button class="header-btn cart-btn position-relative" (click)="abrirCarrito()">
+          🛒 Carrito
+          <span class="cart-badge position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+            {{ cart.items.length }}
+          </span>
+        </button>
+      </div>
+
+      <!-- Incluimos OffcanvasCart -->
+      <app-offcanvas-cart></app-offcanvas-cart>
   </div>
 </header>
 
