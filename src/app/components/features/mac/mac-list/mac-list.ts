@@ -4,7 +4,7 @@ import { ProductoService } from '../../../../../components/services/services-tie
 import { Producto } from '../../../../../models/mac/producto';
 import { ActivatedRoute } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { CartService, ItemCarrito } from '../../../../../components/services/cart.service.ts';
+import { CartService, ItemCarritos } from '../../../../../components/services/cart.service.ts';
 
 @Component({
   selector: 'app-mac-list',
@@ -15,7 +15,7 @@ import { CartService, ItemCarrito } from '../../../../../components/services/car
 })
 export class MacList implements OnInit {
   idSubcategoria!: number;
-  item: ItemCarrito[] = [];
+  item: ItemCarritos[] = [];
   productos: Producto[] = [];
 
   constructor(

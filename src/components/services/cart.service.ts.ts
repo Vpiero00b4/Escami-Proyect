@@ -8,7 +8,7 @@ import { CartItem, CartItemLibro } from '../../app/components/features/libros/li
 // Tipo unificado para los items del carrito
 export type Item = Libro | Producto;
 
-export interface ItemCarrito {
+export interface ItemCarritos {
   libro?: CartItemLibro;
   producto?: Producto;
   precioVenta: number;
@@ -27,7 +27,7 @@ export function isProducto(item: Item): item is Producto {
 @Injectable({ providedIn: 'root' })
 export class CartService {
   private storageKey = 'carroItems';
-  private _itemsCarrito: BehaviorSubject<ItemCarrito[]>;
+  private _itemsCarrito: BehaviorSubject<ItemCarritos[]>;
 
   // Estado de visibilidad del carrito
   private _mostrarCarro = new BehaviorSubject<boolean>(false);
@@ -35,8 +35,8 @@ export class CartService {
 
   constructor(private localStorageService: LocalStorageService) {
     const storedItems =
-      this.localStorageService.getItem<ItemCarrito[]>(this.storageKey) || [];
-    this._itemsCarrito = new BehaviorSubject<ItemCarrito[]>(storedItems);
+      this.localStorageService.getItem<ItemCarritos[]>(this.storageKey) || [];
+    this._itemsCarrito = new BehaviorSubject<ItemCarritos[]>(storedItems);
   }
 
   get itemsCarrito() {
@@ -60,65 +60,65 @@ export class CartService {
 
   // Método para agregar productos/libros al carrito
   addNewProduct(item: Libro | Producto) {
-  const items = [...this._itemsCarrito.value];
+    const items = [...this._itemsCarrito.value];
 
-  const index = items.findIndex(i =>
-    i.libro && isLibro(item)
-      ? i.libro.idLibro === item.idLibro
-      : i.producto && isProducto(item)
-      ? i.producto.productoId === item.productoId
-      : false
-  );
+    const index = items.findIndex(i =>
+      i.libro && isLibro(item)
+        ? i.libro.idLibro === item.idLibro
+        : i.producto && isProducto(item)
+          ? i.producto.productoId === item.productoId
+          : false
+    );
 
-  if (index >= 0) {
-    items[index].cantidad += 1;
-  } else {
-    let nuevoItem: ItemCarrito;
-
-    if (isLibro(item)) {
-      // 👉 transformar Libro → CartItemLibro
-      const cartItem: CartItemLibro = {
-        idLibro: item.idLibro,
-        titulo: item.titulo,
-        autor: item.autor,
-        descripcion: item.descripcion,
-        precio: item.precioVenta ?? 0,
-        cantidad: 1,
-        stock: item.stock,
-        imagen: item.imagen,
-        isbn: item.isbn,
-        tamanno: item.tamanno,
-        condicion: item.condicion,
-        impresion: item.impresion,
-        tipoTapa: item.tipoTapa,
-        estado: item.estado,
-        idSubcategoria: item.idSubcategoria,
-        idTipoPapel: item.idTipoPapel,
-        idProveedor: item.idProveedor
-      };
-
-      nuevoItem = {
-        libro: cartItem,
-        precioVenta: cartItem.precio,
-        cantidad: cartItem.cantidad
-      };
+    if (index >= 0) {
+      items[index].cantidad += 1;
     } else {
-      // Producto ya viene listo
-      nuevoItem = {
-        producto: item,
-        precioVenta: item.precio ?? 0,
-        cantidad: 1
-      };
+      let nuevoItem: ItemCarritos;
+
+      if (isLibro(item)) {
+        // 👉 transformar Libro → CartItemLibro
+        const cartItem: CartItemLibro = {
+          idLibro: item.idLibro,
+          titulo: item.titulo,
+          autor: item.autor,
+          descripcion: item.descripcion,
+          precio: item.precioVenta ?? 0,
+          cantidad: 1,
+          stock: item.stock,
+          imagen: item.imagen,
+          isbn: item.isbn,
+          tamanno: item.tamanno,
+          condicion: item.condicion,
+          impresion: item.impresion,
+          tipoTapa: item.tipoTapa,
+          estado: item.estado,
+          idSubcategoria: item.idSubcategoria,
+          idTipoPapel: item.idTipoPapel,
+          idProveedor: item.idProveedor
+        };
+
+        nuevoItem = {
+          libro: cartItem,
+          precioVenta: cartItem.precio,
+          cantidad: cartItem.cantidad
+        };
+      } else {
+        // Producto ya viene listo
+        nuevoItem = {
+          producto: item,
+          precioVenta: item.precio ?? 0,
+          cantidad: 1
+        };
+      }
+
+      items.push(nuevoItem);
     }
 
-    items.push(nuevoItem);
+    this._updateStorage(items);
   }
 
-  this._updateStorage(items);
-}
-
   // === NUEVO MÉTODO GENERALIZADO ===
-  private _addItem(newItem: ItemCarrito) {
+  private _addItem(newItem: ItemCarritos) {
     const items = [...this._itemsCarrito.value];
 
     let index = -1;
@@ -188,7 +188,7 @@ export class CartService {
     this._updateStorage(items);
   }
 
-  private _updateStorage(items: ItemCarrito[]) {
+  private _updateStorage(items: ItemCarritos[]) {
     this._itemsCarrito.next(items);
     this.localStorageService.setItem(this.storageKey, items);
   }
