@@ -18,6 +18,6 @@ export interface Libro {
   imagen?: string;
   estadoDescripcion: string;
   autores?: Autor[];
-  precioVenta?: number;
-  stock?: number;
+  precioVenta: number;
+  stock: number;
 }

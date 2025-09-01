@@ -8,7 +8,6 @@ import { Subcategoria } from '../../../models/libros/subcategoria';
 import { CategoriaService } from '../../services/services-tienda/libros/categorias.service';
 import { macService } from '../../services/services-tienda/mac/mac.service';
 import { MacCategoria } from '../../../models/mac/macCategoria';
-import { OffcanvasCartComponent } from '../../features/offcanvas-cart.css/offcanvas-cart.component';
 import { CartService } from '../../services/cart.service.ts';
 
 declare const bootstrap: any;
@@ -16,7 +15,7 @@ declare const bootstrap: any;
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [CommonModule, RouterModule, OffcanvasCartComponent],
+  imports: [CommonModule, RouterModule],
   templateUrl: './header.html',
   styleUrls: ['./header.css']
 })
@@ -26,7 +25,7 @@ export class HeaderComponent implements OnInit {
   empresaAbierta: string | null = null;
   categoriaAbierta: number | null = null;
   macAbiertaCat: string | null = null;
-
+  isCartOpen = false;
   // Categorías y subcategorías
   categorias: Categoria[] = [];
   subcategorias: Subcategoria[] = [];
@@ -38,6 +37,7 @@ export class HeaderComponent implements OnInit {
   private categoriaService = inject(CategoriaService);
   private macService = inject(macService);
   private route = inject(ActivatedRoute);
+  public carroService = inject(CartService);
   cart = inject(CartService); // Cambiado a public para usar en template
 
   ngOnInit(): void {
@@ -72,7 +72,9 @@ export class HeaderComponent implements OnInit {
   toggleSidebar() {
     this.isSidebarOpen = !this.isSidebarOpen;
   }
-
+  toggleCart() {
+    this.carroService.abrirCarro();
+  }
   toggleEmpresa(nombre: string) {
     this.empresaAbierta = this.empresaAbierta === nombre ? null : nombre;
     this.categoriaAbierta = null;
@@ -91,9 +93,7 @@ export class HeaderComponent implements OnInit {
   }
 
   /*** Carrito ***/
-  get cartCount(): number {
-    return this.cart.items.length;
-  }
+
 
   abrirCarrito() {
     const offcanvasEl = document.getElementById('cartOffcanvas');

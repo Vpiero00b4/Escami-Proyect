@@ -1,47 +1,61 @@
-import { Component, inject } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { CartItem, CartService } from '../../services/cart.service.ts';
-declare const bootstrap: any;
+import { FormsModule } from '@angular/forms';
+
+import { Libro } from '../../../models/libros/libro';
+import { Producto } from '../../../models/mac/producto';
+import { CartService, ItemCarrito } from '../../services/cart.service.ts';
 
 @Component({
   selector: 'app-cart',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, FormsModule],
   templateUrl: './cart.component.html',
   styleUrls: ['./cart.component.css']
 })
-export class CartComponent {
-  private cart = inject(CartService);
+export class CartComponent implements OnInit {
+  mostrarCarro = false;
+  itemsCarrito: ItemCarrito[] = [];
+  defaultImageUrl = 'https://static.vecteezy.com/system/resources/previews/004/141/669/non_2x/no-photo-or-blank-image-icon.jpg';
 
-  get items(): CartItem[] {
-    return this.cart.items;
+  constructor(public cartService: CartService) {}
+
+  ngOnInit() {
+    this.cartService.itemsCarrito.subscribe(items => this.itemsCarrito = items);
+    this.cartService.mostrarCarro$.subscribe(show => this.mostrarCarro = show);
   }
 
-  get total(): number {
-    return this.cart.total;
+  cerrarCarro() { 
+    this.cartService.cerrarCarro(); 
   }
 
-  get selectedItem(): CartItem | null {
-    return this.cart.selectedItem;
-  }
-
-  removerItem(idLibro: number) {
-    this.cart.remove(idLibro);
-  }
-
-  onQtyChange(idLibro: number, event: Event) {
-    const input = event.target as HTMLInputElement;
-    this.cart.updateQuantity(idLibro, Number(input.value));
-  }
-
-  confirmarCompra() {
-    // Para pruebas: solo limpiar carrito
-    alert('Compra registrada con éxito (simulación)');
-    this.cart.clear();
-    const offcanvasEl = document.getElementById('cartOffcanvas');
-    if (offcanvasEl) {
-      const instance = bootstrap.Offcanvas.getOrCreateInstance(offcanvasEl);
-      instance.hide();
+  onQtyChange(item: ItemCarrito, cantidad: number) {
+    if (item.libro) {
+      this.cartService.updateQuantity(item.libro.idLibro, cantidad, true);
+    } else if (item.producto) {
+      this.cartService.updateQuantity(item.producto.productoId, cantidad, false);
     }
+  }
+
+  delete(index: number) { 
+    this.cartService.deleteItem(index); 
+  }
+
+  get total() { 
+    return this.cartService.total; 
+  }
+
+  getTitulo(item: ItemCarrito) { 
+    return item.libro ? item.libro.titulo : item.producto?.nombre; 
+  }
+
+  getDescripcion(item: ItemCarrito) { 
+    return item.libro 
+      ? item.libro.autor || 'Autor no disponible' 
+      : item.producto?.descripcion; 
+  }
+
+  getImagen(item: ItemCarrito) { 
+    return item.libro?.imagen || item.producto?.imagen || this.defaultImageUrl; 
   }
 }

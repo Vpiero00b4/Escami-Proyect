@@ -2,9 +2,10 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Libro } from '../../../../../models/libros/libro';
 import { LibroService } from '../../../../../components/services/services-tienda/libros/api.service';
+import { CartService } from '../../../../../components/services/cart.service.ts';
 
 // Define aquí la interfaz CartItem mínima que usa tu CartService
-interface CartItem {
+export interface CartItemLibro {
   idLibro: number;
   titulo: string;
   autor: string;
@@ -14,7 +15,7 @@ interface CartItem {
   stock: number;
   imagen?: string;
 
-  // opcionales para el DTO backend (si los tienes disponibles en Libro)
+  // opcionales para backend
   isbn?: string;
   tamanno?: string;
   condicion?: string;
@@ -25,6 +26,28 @@ interface CartItem {
   idTipoPapel?: number;
   idProveedor?: number;
 }
+
+export interface CartItemProducto {
+  productoId: number;
+  nombre: string;
+  descripcion: string;
+  precio: number;
+  cantidad: number;
+  stock: number;
+  imagen?: string;
+}
+
+// El carrito acepta libro o producto
+export type CartItem =
+  | { tipo: 'libro'; data: CartItemLibro }
+  | { tipo: 'producto'; data: CartItemProducto };
+
+export interface ItemCarrito {
+  item: CartItem;
+  precioVenta: number;
+  cantidad: number;
+}
+
 
 @Component({
   selector: 'app-libro-list',
@@ -41,21 +64,25 @@ export class LibroList implements OnInit {
   libros: Libro[] = [];
   loading = true;
 
-  constructor(private libroService: LibroService) {}
+  constructor(private libroService: LibroService, private cartService: CartService) { }
 
   ngOnInit(): void {
     this.cargarLibros();
   }
+  // Método para agregar un producto específico al carrito
+  agregarAlCarrito(libro: Libro) {
+    if (libro.stock <= 0) return;
+    this.cartService.addLibro(libro);
+    this.cartService.abrirCarro();
+  }
+
+
 
   onImageError(event: Event): void {
     (event.target as HTMLImageElement).src = 'assets/img/no-disponible.png';
   }
 
-  // Botón: mapear Libro -> CartItem y emitir
-  agregarAlCarrito(libro: Libro): void {
-    const item = this.mapLibroToCartItem(libro);
-    this.addToCart.emit(item);
-  }
+
 
   // Helpers de template
   tieneAutores(libro: Libro): boolean {
@@ -109,7 +136,7 @@ export class LibroList implements OnInit {
       ? `${libro.autores![0].nombre} ${libro.autores![0].apellido}`
       : 'Genérico';
 
-    return {
+    const cartItemLibro: CartItemLibro = {
       idLibro: libro.idLibro,
       titulo: libro.titulo ?? 'Sin título',
       autor,
@@ -119,7 +146,7 @@ export class LibroList implements OnInit {
       stock: libro.stock ?? 0,
       imagen: (libro as any).imagen ?? undefined,
 
-      // opcionales si existen en tu modelo Libro:
+      // opcionales
       isbn: (libro as any).isbn ?? '',
       tamanno: (libro as any).tamanno ?? '',
       condicion: (libro as any).condicion ?? '',
@@ -130,14 +157,20 @@ export class LibroList implements OnInit {
       idTipoPapel: (libro as any).idTipoPapel ?? 0,
       idProveedor: (libro as any).idProveedor ?? 0
     };
+
+    return {
+      tipo: 'libro',
+      data: cartItemLibro
+    };
   }
+
   obtenerClaseStockTailwind(libro: any): string {
-  if (libro.stock > 10) {
-    return 'bg-green-100 text-green-800'; // En stock
-  } else if (libro.stock > 0 && libro.stock <= 10) {
-    return 'bg-yellow-100 text-yellow-800'; // Stock bajo
-  } else {
-    return 'bg-red-100 text-red-800'; // Sin stock
+    if (libro.stock > 10) {
+      return 'bg-green-100 text-green-800'; // En stock
+    } else if (libro.stock > 0 && libro.stock <= 10) {
+      return 'bg-yellow-100 text-yellow-800'; // Stock bajo
+    } else {
+      return 'bg-red-100 text-red-800'; // Sin stock
+    }
   }
-}
 }
