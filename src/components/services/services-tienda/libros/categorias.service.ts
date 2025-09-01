@@ -19,4 +19,5 @@ export class CategoriaService {
   getSubcategorias(): Observable<Subcategoria[]> {
     return this.http.get<Subcategoria[]>(`${this.apiUrl}/Subcategoria`);
   }
+
 }

@@ -5,9 +5,9 @@
     <div class="header-left">
       <button class="menu-btn" (click)="toggleSidebar()">
         @if (!isSidebarOpen) {
-          <span>☰</span>
+        <span>☰</span>
         } @else {
-          <span>✖</span>
+        <span>✖</span>
         }
       </button>
       <a routerLink="/" class="logo">🛍️ Marketplace</a>
@@ -33,7 +33,7 @@
 <!-- Sidebar -->
 <div class="sidebar" [class.open]="isSidebarOpen">
   <button class="close-btn" (click)="toggleSidebar()">✖</button>
-  
+
   <ul class="sidebar-nav">
     <li><a routerLink="/" (click)="toggleSidebar()">🏠 Inicio</a></li>
 
@@ -51,8 +51,8 @@
           </div>
           <ul class="dropdown-submenu" *ngIf="categoriaAbierta === cat.idCategoria">
             <li *ngFor="let sub of getSubcategoriasByCategoria(cat.idCategoria)">
-              <a [routerLink]="['/products/libros', cat.categoria1.toLowerCase(), sub.descripcion.toLowerCase()]"
-                 (click)="toggleSidebar()">
+              <a [routerLink]="['/macProductos', cat.categoria1.toLowerCase(), sub.descripcion.toLowerCase()]"
+                (click)="toggleSidebar()">
                 {{ sub.descripcion }}
               </a>
             </li>
@@ -60,57 +60,81 @@
         </li>
       </ul>
     </li>
+    <!-- 🍎 Mac -->
+    <li class="dropdown">
+      <div class="dropdown-header" (click)="toggleEmpresa('mac')">
+        <span>🍎 Mac</span>
+        <span class="arrow" [class.open]="empresaAbierta === 'mac'">▶</span>
+      </div>
+      <ul class="dropdown-menu" *ngIf="empresaAbierta === 'mac'">
+        <li *ngFor="let macat of maccategorias" class="dropdown-sub">
+          <div class="sub-header" (click)="toggleCategoria(macat.idCategoria)">
+            {{ macat.nombre }}
+            <span class="arrow" [class.open]="categoriaAbierta === macat.idCategoria">▶</span>
+          </div>
+          <ul class="dropdown-submenu" *ngIf="categoriaAbierta === macat.idCategoria">
+            <li *ngFor="let sub of macat.subcategorias">
+              <a [routerLink]="['/home/macProductos', macat.nombre.toLowerCase(), sub.nombre.toLowerCase(), sub.id]"
+                (click)="toggleSidebar()">
+                {{ sub.nombre }}
+              </a>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+
 
     <!-- 👟 Calzados -->
     <li class="dropdown">
-  <div class="dropdown-header" (click)="toggleEmpresa('calzados')">
-    <span>👟 Calzados</span>
-    <span class="arrow" [class.open]="empresaAbierta === 'calzados'">▶</span>
-  </div>
-  <ul class="dropdown-menu" *ngIf="empresaAbierta === 'calzados'">
-    <li class="dropdown-sub">
-      <div class="sub-header" (click)="toggleCategoria(1)">
-        Hombres
-        <span class="arrow" [class.open]="categoriaAbierta === 1">▶</span>
+      <div class="dropdown-header" (click)="toggleEmpresa('calzados')">
+        <span>👟 Calzados</span>
+        <span class="arrow" [class.open]="empresaAbierta === 'calzados'">▶</span>
       </div>
-      <ul class="dropdown-submenu" *ngIf="categoriaAbierta === 1">
-        <li><a routerLink="/products/calzados/hombres/i-run" (click)="toggleSidebar()">I-RUN</a></li>
-        <li><a routerLink="/products/calzados/hombres/nike" (click)="toggleSidebar()">Nike</a></li>
-        <li><a routerLink="/products/calzados/hombres/adidas" (click)="toggleSidebar()">Adidas</a></li>
-        <li><a routerLink="/products/calzados/hombres/puma" (click)="toggleSidebar()">Puma</a></li>
-        <li><a routerLink="/products/calzados/hombres/reebok" (click)="toggleSidebar()">Reebok</a></li>
-      </ul>
-    </li>
+      <ul class="dropdown-menu" *ngIf="empresaAbierta === 'calzados'">
+        <li class="dropdown-sub">
+          <div class="sub-header" (click)="toggleCategoria(1)">
+            Hombres
+            <span class="arrow" [class.open]="categoriaAbierta === 1">▶</span>
+          </div>
+          <ul class="dropdown-submenu" *ngIf="categoriaAbierta === 1">
+            <li><a routerLink="/products/calzados/hombres/i-run" (click)="toggleSidebar()">I-RUN</a></li>
+            <li><a routerLink="/products/calzados/hombres/nike" (click)="toggleSidebar()">Nike</a></li>
+            <li><a routerLink="/products/calzados/hombres/adidas" (click)="toggleSidebar()">Adidas</a></li>
+            <li><a routerLink="/products/calzados/hombres/puma" (click)="toggleSidebar()">Puma</a></li>
+            <li><a routerLink="/products/calzados/hombres/reebok" (click)="toggleSidebar()">Reebok</a></li>
+          </ul>
+        </li>
 
-    <li class="dropdown-sub">
-      <div class="sub-header" (click)="toggleCategoria(2)">
-        Mujeres
-        <span class="arrow" [class.open]="categoriaAbierta === 2">▶</span>
-      </div>
-      <ul class="dropdown-submenu" *ngIf="categoriaAbierta === 2">
-        <li><a routerLink="/products/calzados/mujeres/i-run" (click)="toggleSidebar()">I-RUN</a></li>
-        <li><a routerLink="/products/calzados/mujeres/nike" (click)="toggleSidebar()">Nike</a></li>
-        <li><a routerLink="/products/calzados/mujeres/adidas" (click)="toggleSidebar()">Adidas</a></li>
-        <li><a routerLink="/products/calzados/mujeres/puma" (click)="toggleSidebar()">Puma</a></li>
-        <li><a routerLink="/products/calzados/mujeres/reebok" (click)="toggleSidebar()">Reebok</a></li>
-      </ul>
-    </li>
+        <li class="dropdown-sub">
+          <div class="sub-header" (click)="toggleCategoria(2)">
+            Mujeres
+            <span class="arrow" [class.open]="categoriaAbierta === 2">▶</span>
+          </div>
+          <ul class="dropdown-submenu" *ngIf="categoriaAbierta === 2">
+            <li><a routerLink="/products/calzados/mujeres/i-run" (click)="toggleSidebar()">I-RUN</a></li>
+            <li><a routerLink="/products/calzados/mujeres/nike" (click)="toggleSidebar()">Nike</a></li>
+            <li><a routerLink="/products/calzados/mujeres/adidas" (click)="toggleSidebar()">Adidas</a></li>
+            <li><a routerLink="/products/calzados/mujeres/puma" (click)="toggleSidebar()">Puma</a></li>
+            <li><a routerLink="/products/calzados/mujeres/reebok" (click)="toggleSidebar()">Reebok</a></li>
+          </ul>
+        </li>
 
-    <li class="dropdown-sub">
-      <div class="sub-header" (click)="toggleCategoria(3)">
-        Infantil
-        <span class="arrow" [class.open]="categoriaAbierta === 3">▶</span>
-      </div>
-      <ul class="dropdown-submenu" *ngIf="categoriaAbierta === 3">
-        <li><a routerLink="/products/calzados/infantil/i-run" (click)="toggleSidebar()">I-RUN</a></li>
-        <li><a routerLink="/products/calzados/infantil/nike" (click)="toggleSidebar()">Nike</a></li>
-        <li><a routerLink="/products/calzados/infantil/adidas" (click)="toggleSidebar()">Adidas</a></li>
-        <li><a routerLink="/products/calzados/infantil/puma" (click)="toggleSidebar()">Puma</a></li>
-        <li><a routerLink="/products/calzados/infantil/reebok" (click)="toggleSidebar()">Reebok</a></li>
+        <li class="dropdown-sub">
+          <div class="sub-header" (click)="toggleCategoria(3)">
+            Infantil
+            <span class="arrow" [class.open]="categoriaAbierta === 3">▶</span>
+          </div>
+          <ul class="dropdown-submenu" *ngIf="categoriaAbierta === 3">
+            <li><a routerLink="/products/calzados/infantil/i-run" (click)="toggleSidebar()">I-RUN</a></li>
+            <li><a routerLink="/products/calzados/infantil/nike" (click)="toggleSidebar()">Nike</a></li>
+            <li><a routerLink="/products/calzados/infantil/adidas" (click)="toggleSidebar()">Adidas</a></li>
+            <li><a routerLink="/products/calzados/infantil/puma" (click)="toggleSidebar()">Puma</a></li>
+            <li><a routerLink="/products/calzados/infantil/reebok" (click)="toggleSidebar()">Reebok</a></li>
+          </ul>
+        </li>
       </ul>
     </li>
-  </ul>
-</li>
 
     <!-- 🐾 Mascotas -->
     <li class="dropdown">
@@ -144,5 +168,5 @@
 
 <!-- Overlay -->
 @if (isSidebarOpen) {
-  <div class="overlay" (click)="toggleSidebar()"></div>
+<div class="overlay" (click)="toggleSidebar()"></div>
 }
