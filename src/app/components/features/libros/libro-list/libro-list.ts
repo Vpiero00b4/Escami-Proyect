@@ -227,6 +227,51 @@ export class LibroList implements OnInit {
       data: cartItemLibro
     };
   }
+  buildLibroPayload(items: ItemCarrito[], persona: any) {
+    return {
+      items: items
+        .filter(i => i.item.tipo === 'libro') // solo los libros
+        .map(i => {
+          const libro = i.item.data as CartItemLibro; // 🔑 forzamos a CartItemLibro
+          return {
+            libro: {
+              idLibro: libro.idLibro,
+              titulo: libro.titulo,
+              isbn: libro.isbn,
+              tamanno: libro.tamanno,
+              descripcion: libro.descripcion,
+              condicion: libro.condicion,
+              impresion: libro.impresion,
+              tipoTapa: libro.tipoTapa,
+              estado: libro.estado,
+              idSubcategoria: libro.idSubcategoria,
+              idTipoPapel: libro.idTipoPapel,
+              idProveedor: libro.idProveedor
+            },
+            precioVenta: i.precioVenta,
+            cantidad: i.cantidad,
+            descuento: 0
+          };
+        }),
+      totalAmount: items.reduce((acc, i) => acc + i.precioVenta * i.cantidad, 0),
+      persona,
+      tipoComprobante: 'BOLETA',
+      tipoPago: 'EFECTIVO',
+      descuento: 0,
+      vuelto: 0,
+      efectivoRecibido: items.reduce((acc, i) => acc + i.precioVenta * i.cantidad, 0),
+      montoDigital: 0
+    };
+  }
+
+
+  obtenerClaseStockTailwind(libro: any): string {
+    if (libro.stock > 10) {
+      return 'bg-green-100 text-green-800'; // En stock
+    } else if (libro.stock > 0 && libro.stock <= 10) {
+      return 'bg-yellow-100 text-yellow-800'; // Stock bajo
+    } else {
+      return 'bg-red-100 text-red-800'; // Sin stock
 private cargarLibrosPorSubcategoria(idSub: number): void {
   this.loading = true;
   this.libroService.getLibrosPorSubcategoria(idSub).subscribe({
