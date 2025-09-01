@@ -1,1 +1,258 @@
 @import "tailwindcss";
+/* ========== BANNER CAROUSEL STYLES ========== */
+.banner-carousel {
+  position: relative;
+  height: 450px;
+  overflow: hidden;
+  border-radius: 1rem;
+}
+
+.banner-slide {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  transition: opacity 1s ease-in-out;
+}
+
+.banner-slide.active {
+  opacity: 1;
+}
+
+/* Imagen de fondo para cada slide */
+.banner-bg-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+/* Gradientes de respaldo si no cargan las imágenes */
+.banner-slide-1 {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.banner-slide-2 {
+  background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+}
+
+.banner-slide-3 {
+  background: linear-gradient(135deg, #0f0c29 0%, #24243e 100%);
+}
+
+.banner-slide-4 {
+  background: linear-gradient(135deg, #8B4513 0%, #D2691E 100%);
+}
+
+.banner-content {
+  position: relative;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.banner-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, rgba(0, 0, 0, 0.6) 0%, rgba(0, 0, 0, 0.3) 100%);
+  backdrop-filter: blur(1px);
+}
+
+.banner-title {
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+  animation: titleFloat 3s ease-in-out infinite;
+}
+
+.banner-btn {
+  background: linear-gradient(45deg, #ff6b6b, #ee5a52);
+  color: white;
+  padding: 12px 32px;
+  border-radius: 50px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  transition: all 0.3s ease;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 4px 15px rgba(255, 107, 107, 0.4);
+}
+
+.banner-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(255, 107, 107, 0.6);
+  background: linear-gradient(45deg, #ee5a52, #ff6b6b);
+}
+
+/* ========== INDICADORES DEL CAROUSEL ========== */
+.banner-indicator {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.5);
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.banner-indicator.active {
+  background: white;
+  transform: scale(1.2);
+}
+
+.banner-indicator:hover {
+  background: rgba(255, 255, 255, 0.8);
+}
+
+/* ========== OFERTAS ESPECIALES ========== */
+.offer-card {
+  background: white;
+  border-radius: 1rem;
+  padding: 1.5rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.offer-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+}
+
+/* Efecto de brillo en hover */
+.offer-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.5s ease;
+}
+
+.offer-card:hover::before {
+  left: 100%;
+}
+
+.offer-badge {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: linear-gradient(45deg, #ff6b6b, #ee5a52);
+  color: white;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-weight: bold;
+  font-size: 0.875rem;
+  z-index: 10;
+  box-shadow: 0 2px 8px rgba(255, 107, 107, 0.3);
+  animation: pulse 2s infinite;
+}
+
+/* ========== ANIMACIONES ========== */
+@keyframes titleFloat {
+  0%, 100% { 
+    transform: translateY(0px); 
+  }
+  50% { 
+    transform: translateY(-10px); 
+  }
+}
+
+@keyframes pulse {
+  0% { 
+    transform: scale(1); 
+  }
+  50% { 
+    transform: scale(1.05); 
+  }
+  100% { 
+    transform: scale(1); 
+  }
+}
+
+/* ========== MEJORAS RESPONSIVE ========== */
+@media (max-width: 768px) {
+  .banner-carousel {
+    height: 350px;
+  }
+  
+  .banner-title {
+    font-size: 2.5rem !important;
+  }
+  
+  .banner-slide p {
+    font-size: 1.125rem !important;
+  }
+  
+  .banner-btn {
+    padding: 10px 24px;
+    font-size: 0.875rem;
+  }
+
+  .banner-slide .relative {
+    text-align: center !important;
+    max-width: none !important;
+  }
+}
+
+@media (max-width: 640px) {
+  .banner-carousel {
+    height: 300px;
+  }
+
+  .banner-title {
+    font-size: 2rem !important;
+  }
+  
+  .banner-slide p {
+    font-size: 1rem !important;
+  }
+
+  .banner-slide .relative {
+    padding: 2rem !important;
+  }
+}
+
+/* ========== MEJORAS GENERALES ========== */
+/* Mejora las transiciones de las categorías */
+.group {
+  position: relative;
+  overflow: hidden;
+}
+
+.group::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(168, 85, 247, 0.1));
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.group:hover::after {
+  opacity: 1;
+}
+
+/* Mejora tipográfica */
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+}
+
+/* Smooth scroll */
+html {
+  scroll-behavior: smooth;
+}
