@@ -5,6 +5,7 @@ import { EmptyHomeComponent } from '../components/EmptyHomeComponent';
 import { HomeComponent } from '../components/home.component';
 import { MacList } from './components/features/mac/mac-list/mac-list';
 import { UsuarioComponent } from '../components/perfil/usuario-component/usuario-component';
+import { MuebleListComponent } from './components/features/muebles/mueble-list-component/mueble-list-component';
 
 export const routes: Routes = [
   {
@@ -17,7 +18,8 @@ export const routes: Routes = [
       { path: 'Perfil', component: UsuarioComponent },
       { path: '', component: EmptyHomeComponent },
       // 🍏 Ruta dinámica para mac
-      { path: 'macProductos/:categoriaMac/:subcategoriaMac/:idSubcategoria', component: MacList }
+      { path: 'macProductos/:categoriaMac/:subcategoriaMac/:idSubcategoria', component: MacList },
+      { path: 'mueblesProductos/:mueblesCategoria/:mueblesubcategoriaMac/:idSubcategoria', component: MuebleListComponent }
     ]
   },
   { path: '', redirectTo: 'home', pathMatch: 'full' },

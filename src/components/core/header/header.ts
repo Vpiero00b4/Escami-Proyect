@@ -5,9 +5,10 @@ import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { Categoria } from '../../../models/libros/categoria';
 import { Subcategoria } from '../../../models/libros/subcategoria';
 import { CategoriaService } from '../../services/services-tienda/libros/categorias.service';
-import { MacCategoria } from '../../../models/mac/macCategoria';
+import { MacCategoria, MuebleCategoria, MuebleSubcategoria } from '../../../models/mac/macCategoria';
 import { CartService } from '../../services/cart.service.ts';
 import { macService } from '../../services/services-tienda/mac/mac.service';
+import { MueblesService } from '../../services/services-tienda/Muebles/muebles.service';
 
 declare const bootstrap: any;
 
@@ -31,7 +32,8 @@ export class HeaderComponent implements OnInit {
   categoriaMac: string | null = null;
   subcategoriaMac: string | null = null;
   maccategorias: MacCategoria[] = [];
-
+  mueblescategorias: MuebleCategoria[] = []; // nueva variable para muebles
+  mueblesCategoriaAbierta: number | null = null;
   // Servicios
   private categoriaService = inject(CategoriaService);
   // private macService = inject(MacService);
@@ -39,6 +41,7 @@ export class HeaderComponent implements OnInit {
   private router = inject(Router);
   public cartService = inject(CartService); // público para usar en el template
   public macService = inject(macService);
+  public mueblesCategoriaService = inject(MueblesService);
   ngOnInit(): void {
     this.cargarCategorias();
     this.cargarSubcategorias();
@@ -47,8 +50,31 @@ export class HeaderComponent implements OnInit {
       this.subcategoriaMac = params.get('subcategoriaMac');
     });
     this.cargarMacCategorias();
+    this.loadMueblesCategorias();
   }
-
+  /*** Manejo Muebles ***/
+  loadMueblesCategorias() {
+    this.mueblesCategoriaService.getCategorias().subscribe({
+      next: (res: MuebleCategoria[]) => {
+        this.mueblescategorias = res;
+      },
+      error: (err) => console.error('Error cargando categorías de muebles', err)
+    });
+  }
+  toggleMueblesCategoria(idCategoria: number) {
+    this.mueblesCategoriaAbierta =
+      this.mueblesCategoriaAbierta === idCategoria ? null : idCategoria;
+  }
+  // Método para navegar a productos de muebles (similar a libros/mac)
+  navegarASubcategoriaMuebles(catNombre: string, sub: MuebleSubcategoria) {
+    this.router.navigate([
+      '/home/mueblesProductos',
+      catNombre.toLowerCase(),
+      sub.nombre.toLowerCase(),
+      sub.id
+    ]);
+    this.toggleSidebar();
+  }
   /*** Manejo de categorías y subcategorías ***/
   cargarCategorias() {
     this.categoriaService.getCategorias().subscribe({
@@ -95,11 +121,11 @@ export class HeaderComponent implements OnInit {
   }
 
   /*** Manejo MAC ***/
-    cargarMacCategorias() {
-      this.macService.getCategorias().subscribe(res => {
-        this.maccategorias = Array.isArray(res) ? res : [res];
-      });
-    }
+  cargarMacCategorias() {
+    this.macService.getCategorias().subscribe(res => {
+      this.maccategorias = Array.isArray(res) ? res : [res];
+    });
+  }
 
   /*** Carrito ***/
   abrirCarrito() {

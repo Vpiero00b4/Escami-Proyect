@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { Libro } from '../../models/libros/libro';
-import { Producto } from '../../models/mac/producto';
+import { MuebleProducto, Producto } from '../../models/mac/producto';
 import { LocalStorageService } from './localStorage.service';
 import { CartItem, CartItemLibro } from '../../app/components/features/libros/libro-list/libro-list';
 
@@ -11,6 +11,7 @@ export type Item = Libro | Producto;
 export interface ItemCarritos {
   libro?: CartItemLibro;
   producto?: Producto;
+  muebleProductos?:MuebleProducto;
   precioVenta: number;
   cantidad: number;
 }

@@ -33,4 +33,6 @@ export class VentaService {
     return this.http.get<Venta[]>(`https://localhost:7049/api/Ventas/usuario/${id}`);
   }
 
+  
+
 }
