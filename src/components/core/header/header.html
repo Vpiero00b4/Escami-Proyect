@@ -1,136 +1,166 @@
-<header
-  class="sticky top-0 z-[1100] bg-gradient-to-br from-slate-800 via-slate-700 to-slate-900 text-white shadow-2xl border-b border-slate-600/50 backdrop-blur-sm">
+
+<header class="sticky top-0 z-[1100] bg-gradient-to-br from-slate-800 via-slate-700 to-slate-900 text-white shadow-2xl border-b border-slate-600/50 backdrop-blur-sm">
   <div class="flex items-center justify-between gap-6 p-4 md:p-6 max-w-7xl mx-auto">
 
 
     <div class="flex items-center gap-4">
       <button (click)="toggleSidebar()"
-        class="group bg-gradient-to-br from-blue-500 to-blue-700 text-white text-lg font-bold px-4 py-3 rounded-2xl shadow-lg hover:from-blue-600 hover:to-blue-800 hover:-translate-y-1 hover:shadow-xl transition-all duration-300 border border-blue-400/20">
-        <span *ngIf="!isSidebarOpen" class="group-hover:rotate-90 transition-transform duration-300">☰</span>
-        <span *ngIf="isSidebarOpen" class="group-hover:rotate-180 transition-transform duration-300">✖</span>
+        class="group relative bg-gradient-to-br from-blue-500 to-blue-700 text-white text-lg font-bold px-5 py-3 rounded-2xl shadow-lg hover:from-blue-600 hover:to-blue-800 hover:-translate-y-1 hover:shadow-xl transition-all duration-300 border border-blue-400/20 overflow-hidden">
+
+        <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700"></div>
+        <span *ngIf="!isSidebarOpen" class="relative z-10 group-hover:rotate-90 transition-transform duration-300">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+          </svg>
+        </span>
+        <span *ngIf="isSidebarOpen" class="relative z-10 group-hover:rotate-180 transition-transform duration-300">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+          </svg>
+        </span>
       </button>
-      <a routerLink="/"
-        class="flex items-center gap-2 text-xl md:text-2xl font-bold text-white hover:text-blue-400 transition-colors duration-300">
-        <span class="text-2xl">🛍️</span>
-        <span class="bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">Marketplace</span>
+      
+      <a routerLink="/" class="group flex items-center gap-3 text-xl md:text-2xl font-bold text-white hover:text-blue-400 transition-colors duration-300">
+        <div class="p-2 bg-blue-500/20 rounded-xl group-hover:bg-blue-500/30 transition-all duration-300 group-hover:scale-110">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path>
+          </svg>
+        </div>
+        <div class="flex flex-col">
+          <span class="bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent group-hover:from-blue-300 group-hover:to-purple-300 transition-all duration-300">Marketplace</span>
+          <span class="text-xs text-slate-400 font-normal">Tu tienda online</span>
+        </div>
       </a>
     </div>
 
 
-    <div
-      class="flex flex-1 max-w-2xl bg-white/95 backdrop-blur-sm rounded-2xl border-2 border-gray-200 shadow-lg overflow-hidden focus-within:border-blue-500 focus-within:shadow-xl focus-within:bg-white transition-all duration-300">
-      <input type="text" placeholder="Buscar productos, marcas, categorías..."
-        class="flex-1 px-6 py-3 text-gray-800 placeholder-gray-500 focus:outline-none bg-transparent font-medium" />
-      <button
-        class="bg-gradient-to-br from-blue-500 to-blue-700 text-white px-6 py-3 hover:from-blue-600 hover:to-blue-800 transition-all duration-300 font-semibold">
-        <span class="text-lg">🔍</span>
-      </button>
+    <div class="relative flex flex-1 max-w-2xl">
+      <div class="flex w-full bg-white/95 backdrop-blur-sm rounded-2xl border-2 border-gray-200 shadow-lg overflow-hidden focus-within:border-blue-500 focus-within:shadow-xl focus-within:bg-white transition-all duration-300 group">
+
+        <div class="flex items-center pl-4">
+          <svg class="w-5 h-5 text-gray-400 group-focus-within:text-blue-500 transition-colors duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+          </svg>
+        </div>
+        <input type="text" 
+               placeholder="Buscar productos, marcas, categorías..."
+               class="flex-1 px-4 py-3 text-gray-800 placeholder-gray-500 focus:outline-none bg-transparent font-medium" />
+        <button class="bg-gradient-to-br from-blue-500 to-blue-700 text-white px-6 py-3 hover:from-blue-600 hover:to-blue-800 transition-all duration-300 font-semibold relative overflow-hidden group">
+          <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-500"></div>
+          <span class="relative z-10">Buscar</span>
+        </button>
+      </div>
     </div>
 
 
     <div class="flex items-center gap-3">
-      <a routerLink="/login"
-        class="flex items-center gap-2 text-white font-semibold px-4 py-2 rounded-xl border border-white/20 hover:bg-white/10 hover:border-white/40 hover:shadow-lg transition-all duration-300 backdrop-blur-sm">
-        <span class="text-lg">👤</span>
-        <span class="hidden md:inline">Iniciar Sesión</span>
+      <a routerLink="/login" 
+         class="group flex items-center gap-2 text-white font-semibold px-4 py-2 rounded-xl border border-white/20 hover:bg-white/10 hover:border-white/40 hover:shadow-lg transition-all duration-300 backdrop-blur-sm relative overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700"></div>
+        <div class="relative z-10 group-hover:scale-110 transition-transform duration-300">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+          </svg>
+        </div>
+        <span class="hidden md:inline relative z-10">Iniciar Sesión</span>
       </a>
-      <!-- Botón Carrito -->
-      <a (click)="toggleCart()"
-        class="relative flex items-center gap-2 text-white font-semibold px-4 py-2 rounded-xl border border-white/20 hover:bg-white/10 hover:border-white/40 hover:shadow-lg transition-all duration-300 cursor-pointer">
-        <span class="text-lg">🛒</span>
-        <span class="hidden md:inline">Carrito</span>
+      
+
+      <a (click)="toggleCart()" 
+         class="group relative flex items-center gap-2 text-white font-semibold px-4 py-2 rounded-xl border border-white/20 hover:bg-white/10 hover:border-white/40 hover:shadow-lg transition-all duration-300 cursor-pointer backdrop-blur-sm overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700"></div>
+        <div class="relative z-10 group-hover:scale-110 transition-transform duration-300">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4m0 0L7 13m0 0l-1.5 6M7 13l-1.5-6m0 0h15M17 21a2 2 0 100-4 2 2 0 000 4zM9 21a2 2 0 100-4 2 2 0 000 4z"></path>
+          </svg>
+        </div>
+        <span class="hidden md:inline relative z-10">Carrito</span>
+
+        <div class="absolute -top-2 -right-2 bg-gradient-to-br from-red-500 to-red-700 text-white text-xs font-bold rounded-full w-6 h-6 flex items-center justify-center shadow-lg animate-pulse border-2 border-white">
+          3
+        </div>
       </a>
     </div>
   </div>
 </header>
 
 
-<div
-  class="sidebar fixed top-0 left-0 h-full w-80 bg-gradient-to-b from-slate-900 via-slate-800 to-slate-900 text-white shadow-2xl transform -translate-x-full transition-transform duration-300 ease-in-out z-[1200] border-r border-slate-600/50"
-  [class.translate-x-0]="isSidebarOpen" [class.-translate-x-full]="!isSidebarOpen">
-  <div
-    class="flex items-center justify-between p-6 border-b border-slate-600/50 bg-gradient-to-r from-slate-800 to-slate-700">
-    <h2 class="text-xl font-bold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">Categorías
-    </h2>
-    <button (click)="toggleSidebar()"
-      class="text-white hover:text-red-400 text-2xl font-bold p-2 rounded-xl hover:bg-red-500/10 transition-all duration-300">
-      ✖
+<div class="sidebar fixed top-0 left-0 h-full w-80 bg-gradient-to-b from-slate-900 via-slate-800 to-slate-900 text-white shadow-2xl transform -translate-x-full transition-transform duration-300 ease-in-out z-[1200] border-r border-slate-600/50"
+     [class.translate-x-0]="isSidebarOpen" 
+     [class.-translate-x-full]="!isSidebarOpen">
+  
+
+  <div class="relative flex items-center justify-between p-6 border-b border-slate-600/50 bg-gradient-to-r from-slate-800 to-slate-700 overflow-hidden">
+
+    <div class="absolute inset-0 bg-gradient-to-r from-blue-500/10 to-purple-500/10 opacity-50"></div>
+    <div class="relative z-10 flex items-center gap-3">
+      <div class="p-2 bg-blue-500/20 rounded-lg">
+        <svg class="w-6 h-6 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path>
+        </svg>
+      </div>
+      <h2 class="text-xl font-bold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">Categorías</h2>
+    </div>
+    <button (click)="toggleSidebar()" 
+            class="relative z-10 text-white hover:text-red-400 p-2 rounded-xl hover:bg-red-500/10 transition-all duration-300 group">
+      <svg class="w-6 h-6 group-hover:rotate-90 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+      </svg>
     </button>
   </div>
 
 
   <ul class="sidebar-nav p-4 space-y-2 overflow-y-auto h-full pb-20">
-
+    
 
     <li>
-      <a routerLink="/" (click)="toggleSidebar()"
-        class="flex items-center gap-3 p-3 rounded-xl hover:bg-slate-700/50 transition-all duration-300 font-medium border border-transparent hover:border-slate-600/50">
-        <span class="text-xl">🏠</span>
-        <span>Inicio</span>
+      <a routerLink="/" (click)="toggleSidebar()" 
+         class="group flex items-center gap-3 p-3 rounded-xl hover:bg-slate-700/50 transition-all duration-300 font-medium border border-transparent hover:border-slate-600/50 relative overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-r from-blue-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+        <div class="relative z-10 group-hover:scale-110 transition-transform duration-300 p-1 bg-blue-500/20 rounded-lg group-hover:bg-blue-500/30">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path>
+          </svg>
+        </div>
+        <span class="relative z-10">Inicio</span>
       </a>
     </li>
 
 
     <li class="dropdown">
-      <div
-        class="dropdown-header flex items-center justify-between p-3 rounded-xl hover:bg-slate-700/50 cursor-pointer transition-all duration-300 font-medium border border-transparent hover:border-slate-600/50"
-        (click)="toggleEmpresa('libros')">
-        <div class="flex items-center gap-3">
-          <span class="text-xl">📚</span>
+      <div class="dropdown-header group flex items-center justify-between p-3 rounded-xl hover:bg-slate-700/50 cursor-pointer transition-all duration-300 font-medium border border-transparent hover:border-slate-600/50 relative overflow-hidden" 
+           (click)="toggleEmpresa('libros')">
+        <div class="absolute inset-0 bg-gradient-to-r from-blue-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+        <div class="flex items-center gap-3 relative z-10">
+          <div class="group-hover:scale-110 transition-transform duration-300 p-1 bg-blue-500/20 rounded-lg group-hover:bg-blue-500/30">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
+            </svg>
+          </div>
           <span>Libros</span>
         </div>
-        <span class="arrow text-blue-400 transition-transform duration-300 text-lg"
-          [class.rotate-90]="empresaAbierta === 'libros'">▶</span>
+        <svg class="w-4 h-4 text-blue-400 transition-transform duration-300 relative z-10" 
+             [class.rotate-90]="empresaAbierta === 'libros'" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+        </svg>
       </div>
       <ul class="dropdown-menu ml-4 mt-2 space-y-1" *ngIf="empresaAbierta === 'libros'">
         <li *ngFor="let cat of categorias" class="dropdown-sub">
-          <div
-            class="sub-header flex items-center justify-between p-2 rounded-lg hover:bg-slate-600/30 cursor-pointer transition-all duration-300 text-sm font-medium"
-            (click)="toggleCategoria(cat.idCategoria)">
-            <span class="text-blue-300">{{ cat.categoria1 }}</span>
-            <span class="arrow text-blue-400 transition-transform duration-300"
-              [class.rotate-90]="categoriaAbierta === cat.idCategoria">▶</span>
+          <div class="sub-header group flex items-center justify-between p-2 rounded-lg hover:bg-slate-600/30 cursor-pointer transition-all duration-300 text-sm font-medium relative overflow-hidden" 
+               (click)="toggleCategoria(cat.idCategoria)">
+            <div class="absolute inset-0 bg-gradient-to-r from-blue-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+            <span class="text-blue-300 relative z-10">{{ cat.categoria1 }}</span>
+            <svg class="w-3 h-3 text-blue-400 transition-transform duration-300 relative z-10" 
+                 [class.rotate-90]="categoriaAbierta === cat.idCategoria" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+            </svg>
           </div>
           <ul class="dropdown-submenu ml-4 mt-1 space-y-1" *ngIf="categoriaAbierta === cat.idCategoria">
             <li *ngFor="let sub of getSubcategoriasByCategoria(cat.idCategoria)">
-<a (click)="navegarASubcategoria(cat.idCategoria, sub.id)"
-   class="block p-2 rounded-lg hover:bg-blue-500/20 transition-all duration-300 text-sm text-gray-300 hover:text-white border-l-2 border-transparent hover:border-blue-400">
-   {{ sub.descripcion }}
-</a>
-
-            </li>
-          </ul>
-        </li>
-      </ul>
-    </li>
-
-
-    <li class="dropdown">
-      <div
-        class="dropdown-header flex items-center justify-between p-3 rounded-xl hover:bg-slate-700/50 cursor-pointer transition-all duration-300 font-medium border border-transparent hover:border-slate-600/50"
-        (click)="toggleEmpresa('mac')">
-        <div class="flex items-center gap-3">
-          <span class="text-xl">🍎</span>
-          <span>Tiendas Mac</span>
-        </div>
-        <span class="arrow text-blue-400 transition-transform duration-300 text-lg"
-          [class.rotate-90]="empresaAbierta === 'mac'">▶</span>
-      </div>
-      <ul class="dropdown-menu ml-4 mt-2 space-y-1" *ngIf="empresaAbierta === 'mac'">
-        <li *ngFor="let macat of maccategorias" class="dropdown-sub">
-          <div
-            class="sub-header flex items-center justify-between p-2 rounded-lg hover:bg-slate-600/30 cursor-pointer transition-all duration-300 text-sm font-medium"
-            (click)="toggleCategoria(macat.idCategoria)">
-            <span class="text-blue-300">{{ macat.nombre }}</span>
-            <span class="arrow text-blue-400 transition-transform duration-300"
-              [class.rotate-90]="categoriaAbierta === macat.idCategoria">▶</span>
-          </div>
-          <ul class="dropdown-submenu ml-4 mt-1 space-y-1" *ngIf="categoriaAbierta === macat.idCategoria">
-            <li *ngFor="let sub of macat.subcategorias">
-              <a [routerLink]="['/home/macProductos', macat.nombre.toLowerCase(), sub.nombre.toLowerCase(), sub.id]"
-                (click)="toggleSidebar()"
-                class="block p-2 rounded-lg hover:bg-blue-500/20 transition-all duration-300 text-sm text-gray-300 hover:text-white border-l-2 border-transparent hover:border-blue-400">
-                {{ sub.nombre }}
+              <a (click)="navegarASubcategoria(cat.idCategoria, sub.id)"
+                 class="group block p-2 rounded-lg hover:bg-blue-500/20 transition-all duration-300 text-sm text-gray-300 hover:text-white border-l-2 border-transparent hover:border-blue-400 relative overflow-hidden">
+                <div class="absolute inset-0 bg-gradient-to-r from-blue-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                <span class="relative z-10">{{ sub.descripcion }}</span>
               </a>
             </li>
           </ul>
@@ -140,99 +170,139 @@
 
 
     <li class="dropdown">
-      <div
-        class="dropdown-header flex items-center justify-between p-3 rounded-xl hover:bg-slate-700/50 cursor-pointer transition-all duration-300 font-medium border border-transparent hover:border-slate-600/50"
-        (click)="toggleEmpresa('calzados')">
-        <div class="flex items-center gap-3">
-          <span class="text-xl">👟</span>
+      <div class="dropdown-header group flex items-center justify-between p-3 rounded-xl hover:bg-slate-700/50 cursor-pointer transition-all duration-300 font-medium border border-transparent hover:border-slate-600/50 relative overflow-hidden" 
+           (click)="toggleEmpresa('mac')">
+        <div class="absolute inset-0 bg-gradient-to-r from-blue-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+        <div class="flex items-center gap-3 relative z-10">
+          <div class="group-hover:scale-110 transition-transform duration-300 p-1 bg-blue-500/20 rounded-lg group-hover:bg-blue-500/30">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+            </svg>
+          </div>
+          <span>Tiendas Mac</span>
+        </div>
+        <svg class="w-4 h-4 text-blue-400 transition-transform duration-300 relative z-10" 
+             [class.rotate-90]="empresaAbierta === 'mac'" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+        </svg>
+      </div>
+      <ul class="dropdown-menu ml-4 mt-2 space-y-1" *ngIf="empresaAbierta === 'mac'">
+        <li *ngFor="let macat of maccategorias" class="dropdown-sub">
+          <div class="sub-header group flex items-center justify-between p-2 rounded-lg hover:bg-slate-600/30 cursor-pointer transition-all duration-300 text-sm font-medium relative overflow-hidden" 
+               (click)="toggleCategoria(macat.idCategoria)">
+            <div class="absolute inset-0 bg-gradient-to-r from-blue-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+            <span class="text-blue-300 relative z-10">{{ macat.nombre }}</span>
+            <svg class="w-3 h-3 text-blue-400 transition-transform duration-300 relative z-10" 
+                 [class.rotate-90]="categoriaAbierta === macat.idCategoria" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+            </svg>
+          </div>
+          <ul class="dropdown-submenu ml-4 mt-1 space-y-1" *ngIf="categoriaAbierta === macat.idCategoria">
+            <li *ngFor="let sub of macat.subcategorias">
+              <a [routerLink]="['/home/macProductos', macat.nombre.toLowerCase(), sub.nombre.toLowerCase(), sub.id]"
+                 (click)="toggleSidebar()"
+                 class="group block p-2 rounded-lg hover:bg-blue-500/20 transition-all duration-300 text-sm text-gray-300 hover:text-white border-l-2 border-transparent hover:border-blue-400 relative overflow-hidden">
+                <div class="absolute inset-0 bg-gradient-to-r from-blue-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                <span class="relative z-10">{{ sub.nombre }}</span>
+              </a>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+
+
+    <li class="dropdown">
+      <div class="dropdown-header group flex items-center justify-between p-3 rounded-xl hover:bg-slate-700/50 cursor-pointer transition-all duration-300 font-medium border border-transparent hover:border-slate-600/50 relative overflow-hidden" 
+           (click)="toggleEmpresa('calzados')">
+        <div class="absolute inset-0 bg-gradient-to-r from-blue-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+        <div class="flex items-center gap-3 relative z-10">
+          <div class="group-hover:scale-110 transition-transform duration-300 p-1 bg-blue-500/20 rounded-lg group-hover:bg-blue-500/30">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 15.546c-.523 0-1.046.151-1.5.454a2.704 2.704 0 01-3 0 2.704 2.704 0 00-3 0 2.704 2.704 0 01-3 0 2.704 2.704 0 00-3 0 2.704 2.704 0 01-3 0A2.704 2.704 0 003 15.546V6.454c.523 0 1.046-.151 1.5-.454a2.704 2.704 0 013 0 2.704 2.704 0 003 0 2.704 2.704 0 013 0 2.704 2.704 0 003 0 2.704 2.704 0 013 0c.454.303.977.454 1.5.454v9.092z"></path>
+            </svg>
+          </div>
           <span>Calzados</span>
         </div>
-        <span class="arrow text-blue-400 transition-transform duration-300 text-lg"
-          [class.rotate-90]="empresaAbierta === 'calzados'">▶</span>
+        <svg class="w-4 h-4 text-blue-400 transition-transform duration-300 relative z-10" 
+             [class.rotate-90]="empresaAbierta === 'calzados'" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+        </svg>
       </div>
       <ul class="dropdown-menu ml-4 mt-2 space-y-1" *ngIf="empresaAbierta === 'calzados'">
-
+        
 
         <li class="dropdown-sub">
-          <div
-            class="sub-header flex items-center justify-between p-2 rounded-lg hover:bg-slate-600/30 cursor-pointer transition-all duration-300 text-sm font-medium"
-            (click)="toggleCategoria(1)">
-            <span class="text-blue-300">👨 Hombres</span>
-            <span class="arrow text-blue-400 transition-transform duration-300"
-              [class.rotate-90]="categoriaAbierta === 1">▶</span>
+          <div class="sub-header group flex items-center justify-between p-2 rounded-lg hover:bg-slate-600/30 cursor-pointer transition-all duration-300 text-sm font-medium relative overflow-hidden" 
+               (click)="toggleCategoria(1)">
+            <div class="absolute inset-0 bg-gradient-to-r from-blue-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+            <span class="text-blue-300 relative z-10 flex items-center gap-2">
+              <svg class="w-4 h-4 group-hover:scale-110 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+              </svg>
+              Hombres
+            </span>
+            <svg class="w-3 h-3 text-blue-400 transition-transform duration-300 relative z-10" 
+                 [class.rotate-90]="categoriaAbierta === 1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+            </svg>
           </div>
           <ul class="dropdown-submenu ml-4 mt-1 space-y-1" *ngIf="categoriaAbierta === 1">
-            <li><a routerLink="/products/calzados/hombres/i-run" (click)="toggleSidebar()"
-                class="block p-2 rounded-lg hover:bg-blue-500/20 transition-all duration-300 text-sm text-gray-300 hover:text-white border-l-2 border-transparent hover:border-blue-400">I-RUN</a>
-            </li>
-            <li><a routerLink="/products/calzados/hombres/nike" (click)="toggleSidebar()"
-                class="block p-2 rounded-lg hover:bg-blue-500/20 transition-all duration-300 text-sm text-gray-300 hover:text-white border-l-2 border-transparent hover:border-blue-400">Nike</a>
-            </li>
-            <li><a routerLink="/products/calzados/hombres/adidas" (click)="toggleSidebar()"
-                class="block p-2 rounded-lg hover:bg-blue-500/20 transition-all duration-300 text-sm text-gray-300 hover:text-white border-l-2 border-transparent hover:border-blue-400">Adidas</a>
-            </li>
-            <li><a routerLink="/products/calzados/hombres/puma" (click)="toggleSidebar()"
-                class="block p-2 rounded-lg hover:bg-blue-500/20 transition-all duration-300 text-sm text-gray-300 hover:text-white border-l-2 border-transparent hover:border-blue-400">Puma</a>
-            </li>
-            <li><a routerLink="/products/calzados/hombres/reebok" (click)="toggleSidebar()"
-                class="block p-2 rounded-lg hover:bg-blue-500/20 transition-all duration-300 text-sm text-gray-300 hover:text-white border-l-2 border-transparent hover:border-blue-400">Reebok</a>
-            </li>
+            <li><a routerLink="/products/calzados/hombres/i-run" (click)="toggleSidebar()" class="group block p-2 rounded-lg hover:bg-blue-500/20 transition-all duration-300 text-sm text-gray-300 hover:text-white border-l-2 border-transparent hover:border-blue-400 relative overflow-hidden"><div class="absolute inset-0 bg-gradient-to-r from-blue-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div><span class="relative z-10">I-RUN</span></a></li>
+            <li><a routerLink="/products/calzados/hombres/nike" (click)="toggleSidebar()" class="group block p-2 rounded-lg hover:bg-blue-500/20 transition-all duration-300 text-sm text-gray-300 hover:text-white border-l-2 border-transparent hover:border-blue-400 relative overflow-hidden"><div class="absolute inset-0 bg-gradient-to-r from-blue-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div><span class="relative z-10">Nike</span></a></li>
+            <li><a routerLink="/products/calzados/hombres/adidas" (click)="toggleSidebar()" class="group block p-2 rounded-lg hover:bg-blue-500/20 transition-all duration-300 text-sm text-gray-300 hover:text-white border-l-2 border-transparent hover:border-blue-400 relative overflow-hidden"><div class="absolute inset-0 bg-gradient-to-r from-blue-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div><span class="relative z-10">Adidas</span></a></li>
+            <li><a routerLink="/products/calzados/hombres/puma" (click)="toggleSidebar()" class="group block p-2 rounded-lg hover:bg-blue-500/20 transition-all duration-300 text-sm text-gray-300 hover:text-white border-l-2 border-transparent hover:border-blue-400 relative overflow-hidden"><div class="absolute inset-0 bg-gradient-to-r from-blue-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div><span class="relative z-10">Puma</span></a></li>
+            <li><a routerLink="/products/calzados/hombres/reebok" (click)="toggleSidebar()" class="group block p-2 rounded-lg hover:bg-blue-500/20 transition-all duration-300 text-sm text-gray-300 hover:text-white border-l-2 border-transparent hover:border-blue-400 relative overflow-hidden"><div class="absolute inset-0 bg-gradient-to-r from-blue-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div><span class="relative z-10">Reebok</span></a></li>
           </ul>
         </li>
 
 
         <li class="dropdown-sub">
-          <div
-            class="sub-header flex items-center justify-between p-2 rounded-lg hover:bg-slate-600/30 cursor-pointer transition-all duration-300 text-sm font-medium"
-            (click)="toggleCategoria(2)">
-            <span class="text-pink-300">👩 Mujeres</span>
-            <span class="arrow text-blue-400 transition-transform duration-300"
-              [class.rotate-90]="categoriaAbierta === 2">▶</span>
+          <div class="sub-header group flex items-center justify-between p-2 rounded-lg hover:bg-slate-600/30 cursor-pointer transition-all duration-300 text-sm font-medium relative overflow-hidden" 
+               (click)="toggleCategoria(2)">
+            <div class="absolute inset-0 bg-gradient-to-r from-pink-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+            <span class="text-pink-300 relative z-10 flex items-center gap-2">
+              <svg class="w-4 h-4 group-hover:scale-110 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+              </svg>
+              Mujeres
+            </span>
+            <svg class="w-3 h-3 text-blue-400 transition-transform duration-300 relative z-10" 
+                 [class.rotate-90]="categoriaAbierta === 2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+            </svg>
           </div>
           <ul class="dropdown-submenu ml-4 mt-1 space-y-1" *ngIf="categoriaAbierta === 2">
-            <li><a routerLink="/products/calzados/mujeres/i-run" (click)="toggleSidebar()"
-                class="block p-2 rounded-lg hover:bg-pink-500/20 transition-all duration-300 text-sm text-gray-300 hover:text-white border-l-2 border-transparent hover:border-pink-400">I-RUN</a>
-            </li>
-            <li><a routerLink="/products/calzados/mujeres/nike" (click)="toggleSidebar()"
-                class="block p-2 rounded-lg hover:bg-pink-500/20 transition-all duration-300 text-sm text-gray-300 hover:text-white border-l-2 border-transparent hover:border-pink-400">Nike</a>
-            </li>
-            <li><a routerLink="/products/calzados/mujeres/adidas" (click)="toggleSidebar()"
-                class="block p-2 rounded-lg hover:bg-pink-500/20 transition-all duration-300 text-sm text-gray-300 hover:text-white border-l-2 border-transparent hover:border-pink-400">Adidas</a>
-            </li>
-            <li><a routerLink="/products/calzados/mujeres/puma" (click)="toggleSidebar()"
-                class="block p-2 rounded-lg hover:bg-pink-500/20 transition-all duration-300 text-sm text-gray-300 hover:text-white border-l-2 border-transparent hover:border-pink-400">Puma</a>
-            </li>
-            <li><a routerLink="/products/calzados/mujeres/reebok" (click)="toggleSidebar()"
-                class="block p-2 rounded-lg hover:bg-pink-500/20 transition-all duration-300 text-sm text-gray-300 hover:text-white border-l-2 border-transparent hover:border-pink-400">Reebok</a>
-            </li>
+            <li><a routerLink="/products/calzados/mujeres/i-run" (click)="toggleSidebar()" class="group block p-2 rounded-lg hover:bg-pink-500/20 transition-all duration-300 text-sm text-gray-300 hover:text-white border-l-2 border-transparent hover:border-pink-400 relative overflow-hidden"><div class="absolute inset-0 bg-gradient-to-r from-pink-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div><span class="relative z-10">I-RUN</span></a></li>
+            <li><a routerLink="/products/calzados/mujeres/nike" (click)="toggleSidebar()" class="group block p-2 rounded-lg hover:bg-pink-500/20 transition-all duration-300 text-sm text-gray-300 hover:text-white border-l-2 border-transparent hover:border-pink-400 relative overflow-hidden"><div class="absolute inset-0 bg-gradient-to-r from-pink-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div><span class="relative z-10">Nike</span></a></li>
+            <li><a routerLink="/products/calzados/mujeres/adidas" (click)="toggleSidebar()" class="group block p-2 rounded-lg hover:bg-pink-500/20 transition-all duration-300 text-sm text-gray-300 hover:text-white border-l-2 border-transparent hover:border-pink-400 relative overflow-hidden"><div class="absolute inset-0 bg-gradient-to-r from-pink-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div><span class="relative z-10">Adidas</span></a></li>
+            <li><a routerLink="/products/calzados/mujeres/puma" (click)="toggleSidebar()" class="group block p-2 rounded-lg hover:bg-pink-500/20 transition-all duration-300 text-sm text-gray-300 hover:text-white border-l-2 border-transparent hover:border-pink-400 relative overflow-hidden"><div class="absolute inset-0 bg-gradient-to-r from-pink-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div><span class="relative z-10">Puma</span></a></li>
+            <li><a routerLink="/products/calzados/mujeres/reebok" (click)="toggleSidebar()" class="group block p-2 rounded-lg hover:bg-pink-500/20 transition-all duration-300 text-sm text-gray-300 hover:text-white border-l-2 border-transparent hover:border-pink-400 relative overflow-hidden"><div class="absolute inset-0 bg-gradient-to-r from-pink-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div><span class="relative z-10">Reebok</span></a></li>
           </ul>
         </li>
 
 
         <li class="dropdown-sub">
-          <div
-            class="sub-header flex items-center justify-between p-2 rounded-lg hover:bg-slate-600/30 cursor-pointer transition-all duration-300 text-sm font-medium"
-            (click)="toggleCategoria(3)">
-            <span class="text-yellow-300">👶 Infantil</span>
-            <span class="arrow text-blue-400 transition-transform duration-300"
-              [class.rotate-90]="categoriaAbierta === 3">▶</span>
+          <div class="sub-header group flex items-center justify-between p-2 rounded-lg hover:bg-slate-600/30 cursor-pointer transition-all duration-300 text-sm font-medium relative overflow-hidden" 
+               (click)="toggleCategoria(3)">
+            <div class="absolute inset-0 bg-gradient-to-r from-yellow-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+            <span class="text-yellow-300 relative z-10 flex items-center gap-2">
+              <svg class="w-4 h-4 group-hover:scale-110 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h1a3 3 0 000-6h-1m4 6V4a3 3 0 013-3m-3 14.828V21a3 3 0 01-3-3"></path>
+              </svg>
+              Infantil
+            </span>
+            <svg class="w-3 h-3 text-blue-400 transition-transform duration-300 relative z-10" 
+                 [class.rotate-90]="categoriaAbierta === 3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+            </svg>
           </div>
           <ul class="dropdown-submenu ml-4 mt-1 space-y-1" *ngIf="categoriaAbierta === 3">
-            <li><a routerLink="/products/calzados/infantil/i-run" (click)="toggleSidebar()"
-                class="block p-2 rounded-lg hover:bg-yellow-500/20 transition-all duration-300 text-sm text-gray-300 hover:text-white border-l-2 border-transparent hover:border-yellow-400">I-RUN</a>
-            </li>
-            <li><a routerLink="/products/calzados/infantil/nike" (click)="toggleSidebar()"
-                class="block p-2 rounded-lg hover:bg-yellow-500/20 transition-all duration-300 text-sm text-gray-300 hover:text-white border-l-2 border-transparent hover:border-yellow-400">Nike</a>
-            </li>
-            <li><a routerLink="/products/calzados/infantil/adidas" (click)="toggleSidebar()"
-                class="block p-2 rounded-lg hover:bg-yellow-500/20 transition-all duration-300 text-sm text-gray-300 hover:text-white border-l-2 border-transparent hover:border-yellow-400">Adidas</a>
-            </li>
-            <li><a routerLink="/products/calzados/infantil/puma" (click)="toggleSidebar()"
-                class="block p-2 rounded-lg hover:bg-yellow-500/20 transition-all duration-300 text-sm text-gray-300 hover:text-white border-l-2 border-transparent hover:border-yellow-400">Puma</a>
-            </li>
-            <li><a routerLink="/products/calzados/infantil/reebok" (click)="toggleSidebar()"
-                class="block p-2 rounded-lg hover:bg-yellow-500/20 transition-all duration-300 text-sm text-gray-300 hover:text-white border-l-2 border-transparent hover:border-yellow-400">Reebok</a>
-            </li>
+            <li><a routerLink="/products/calzados/infantil/i-run" (click)="toggleSidebar()" class="group block p-2 rounded-lg hover:bg-yellow-500/20 transition-all duration-300 text-sm text-gray-300 hover:text-white border-l-2 border-transparent hover:border-yellow-400 relative overflow-hidden"><div class="absolute inset-0 bg-gradient-to-r from-yellow-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div><span class="relative z-10">I-RUN</span></a></li>
+            <li><a routerLink="/products/calzados/infantil/nike" (click)="toggleSidebar()" class="group block p-2 rounded-lg hover:bg-yellow-500/20 transition-all duration-300 text-sm text-gray-300 hover:text-white border-l-2 border-transparent hover:border-yellow-400 relative overflow-hidden"><div class="absolute inset-0 bg-gradient-to-r from-yellow-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div><span class="relative z-10">Nike</span></a></li>
+            <li><a routerLink="/products/calzados/infantil/adidas" (click)="toggleSidebar()" class="group block p-2 rounded-lg hover:bg-yellow-500/20 transition-all duration-300 text-sm text-gray-300 hover:text-white border-l-2 border-transparent hover:border-yellow-400 relative overflow-hidden"><div class="absolute inset-0 bg-gradient-to-r from-yellow-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div><span class="relative z-10">Adidas</span></a></li>
+            <li><a routerLink="/products/calzados/infantil/puma" (click)="toggleSidebar()" class="group block p-2 rounded-lg hover:bg-yellow-500/20 transition-all duration-300 text-sm text-gray-300 hover:text-white border-l-2 border-transparent hover:border-yellow-400 relative overflow-hidden"><div class="absolute inset-0 bg-gradient-to-r from-yellow-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div><span class="relative z-10">Puma</span></a></li>
+            <li><a routerLink="/products/calzados/infantil/reebok" (click)="toggleSidebar()" class="group block p-2 rounded-lg hover:bg-yellow-500/20 transition-all duration-300 text-sm text-gray-300 hover:text-white border-l-2 border-transparent hover:border-yellow-400 relative overflow-hidden"><div class="absolute inset-0 bg-gradient-to-r from-yellow-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div><span class="relative z-10">Reebok</span></a></li>
           </ul>
         </li>
       </ul>
@@ -240,67 +310,76 @@
 
 
     <li class="dropdown">
-      <div
-        class="dropdown-header flex items-center justify-between p-3 rounded-xl hover:bg-slate-700/50 cursor-pointer transition-all duration-300 font-medium border border-transparent hover:border-slate-600/50"
-        (click)="toggleEmpresa('mascotas')">
-        <div class="flex items-center gap-3">
-          <span class="text-xl">🐾</span>
+      <div class="dropdown-header group flex items-center justify-between p-3 rounded-xl hover:bg-slate-700/50 cursor-pointer transition-all duration-300 font-medium border border-transparent hover:border-slate-600/50 relative overflow-hidden" 
+           (click)="toggleEmpresa('mascotas')">
+        <div class="absolute inset-0 bg-gradient-to-r from-green-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+        <div class="flex items-center gap-3 relative z-10">
+          <div class="group-hover:scale-110 transition-transform duration-300 p-1 bg-green-500/20 rounded-lg group-hover:bg-green-500/30">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
+            </svg>
+          </div>
           <span>Mascotas</span>
         </div>
-        <span class="arrow text-blue-400 transition-transform duration-300 text-lg"
-          [class.rotate-90]="empresaAbierta === 'mascotas'">▶</span>
+        <svg class="w-4 h-4 text-blue-400 transition-transform duration-300 relative z-10" 
+             [class.rotate-90]="empresaAbierta === 'mascotas'" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+        </svg>
       </div>
       <ul class="dropdown-menu ml-4 mt-2 space-y-1" *ngIf="empresaAbierta === 'mascotas'">
-        <li><a routerLink="/products/mascotas/alimentos" (click)="toggleSidebar()"
-            class="block p-2 rounded-lg hover:bg-green-500/20 transition-all duration-300 text-sm text-gray-300 hover:text-white border-l-2 border-transparent hover:border-green-400">🍖
-            Alimentos</a></li>
-        <li><a routerLink="/products/mascotas/accesorios" (click)="toggleSidebar()"
-            class="block p-2 rounded-lg hover:bg-green-500/20 transition-all duration-300 text-sm text-gray-300 hover:text-white border-l-2 border-transparent hover:border-green-400">🎾
-            Accesorios</a></li>
-        <li><a routerLink="/products/mascotas/juguetes" (click)="toggleSidebar()"
-            class="block p-2 rounded-lg hover:bg-green-500/20 transition-all duration-300 text-sm text-gray-300 hover:text-white border-l-2 border-transparent hover:border-green-400">🧸
-            Juguetes</a></li>
+        <li><a routerLink="/products/mascotas/alimentos" (click)="toggleSidebar()" class="group block p-2 rounded-lg hover:bg-green-500/20 transition-all duration-300 text-sm text-gray-300 hover:text-white border-l-2 border-transparent hover:border-green-400 relative overflow-hidden"><div class="absolute inset-0 bg-gradient-to-r from-green-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div><span class="relative z-10 flex items-center gap-2"><svg class="w-4 h-4 group-hover:scale-110 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 15.546c-.523 0-1.046.151-1.5.454a2.704 2.704 0 01-3 0 2.704 2.704 0 00-3 0 2.704 2.704 0 01-3 0 2.704 2.704 0 00-3 0 2.704 2.704 0 01-3 0A2.704 2.704 0 003 15.546V6.454c.523 0 1.046-.151 1.5-.454a2.704 2.704 0 013 0 2.704 2.704 0 003 0 2.704 2.704 0 013 0 2.704 2.704 0 003 0 2.704 2.704 0 013 0c.454.303.977.454 1.5.454v9.092z"></path></svg>Alimentos</span></a></li>
+        <li><a routerLink="/products/mascotas/accesorios" (click)="toggleSidebar()" class="group block p-2 rounded-lg hover:bg-green-500/20 transition-all duration-300 text-sm text-gray-300 hover:text-white border-l-2 border-transparent hover:border-green-400 relative overflow-hidden"><div class="absolute inset-0 bg-gradient-to-r from-green-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div><span class="relative z-10 flex items-center gap-2"><svg class="w-4 h-4 group-hover:scale-110 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"></path></svg>Accesorios</span></a></li>
+        <li><a routerLink="/products/mascotas/juguetes" (click)="toggleSidebar()" class="group block p-2 rounded-lg hover:bg-green-500/20 transition-all duration-300 text-sm text-gray-300 hover:text-white border-l-2 border-transparent hover:border-green-400 relative overflow-hidden"><div class="absolute inset-0 bg-gradient-to-r from-green-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div><span class="relative z-10 flex items-center gap-2"><svg class="w-4 h-4 group-hover:scale-110 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h1a3 3 0 000-6h-1m4 6V4a3 3 0 013-3m-3 14.828V21a3 3 0 01-3-3"></path></svg>Juguetes</span></a></li>
       </ul>
     </li>
 
 
     <li class="dropdown">
-      <div
-        class="dropdown-header flex items-center justify-between p-3 rounded-xl hover:bg-slate-700/50 cursor-pointer transition-all duration-300 font-medium border border-transparent hover:border-slate-600/50"
-        (click)="toggleEmpresa('seguridad')">
-        <div class="flex items-center gap-3">
-          <span class="text-xl">🛡️</span>
+      <div class="dropdown-header group flex items-center justify-between p-3 rounded-xl hover:bg-slate-700/50 cursor-pointer transition-all duration-300 font-medium border border-transparent hover:border-slate-600/50 relative overflow-hidden" 
+           (click)="toggleEmpresa('seguridad')">
+        <div class="absolute inset-0 bg-gradient-to-r from-red-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+        <div class="flex items-center gap-3 relative z-10">
+          <div class="group-hover:scale-110 transition-transform duration-300 p-1 bg-red-500/20 rounded-lg group-hover:bg-red-500/30">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
+            </svg>
+          </div>
           <span>Seguridad</span>
         </div>
-        <span class="arrow text-blue-400 transition-transform duration-300 text-lg"
-          [class.rotate-90]="empresaAbierta === 'seguridad'">▶</span>
+        <svg class="w-4 h-4 text-blue-400 transition-transform duration-300 relative z-10" 
+             [class.rotate-90]="empresaAbierta === 'seguridad'" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+        </svg>
       </div>
       <ul class="dropdown-menu ml-4 mt-2 space-y-1" *ngIf="empresaAbierta === 'seguridad'">
-        <li><a routerLink="/products/seguridad/camaras" (click)="toggleSidebar()"
-            class="block p-2 rounded-lg hover:bg-red-500/20 transition-all duration-300 text-sm text-gray-300 hover:text-white border-l-2 border-transparent hover:border-red-400">📹
-            Cámaras</a></li>
-        <li><a routerLink="/products/seguridad/cerraduras" (click)="toggleSidebar()"
-            class="block p-2 rounded-lg hover:bg-red-500/20 transition-all duration-300 text-sm text-gray-300 hover:text-white border-l-2 border-transparent hover:border-red-400">🔐
-            Cerraduras</a></li>
-        <li><a routerLink="/products/seguridad/alarmas" (click)="toggleSidebar()"
-            class="block p-2 rounded-lg hover:bg-red-500/20 transition-all duration-300 text-sm text-gray-300 hover:text-white border-l-2 border-transparent hover:border-red-400">🚨
-            Alarmas</a></li>
+        <li><a routerLink="/products/seguridad/camaras" (click)="toggleSidebar()" class="group block p-2 rounded-lg hover:bg-red-500/20 transition-all duration-300 text-sm text-gray-300 hover:text-white border-l-2 border-transparent hover:border-red-400 relative overflow-hidden"><div class="absolute inset-0 bg-gradient-to-r from-red-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div><span class="relative z-10 flex items-center gap-2"><svg class="w-4 h-4 group-hover:scale-110 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg>Cámaras</span></a></li>
+        <li><a routerLink="/products/seguridad/cerraduras" (click)="toggleSidebar()" class="group block p-2 rounded-lg hover:bg-red-500/20 transition-all duration-300 text-sm text-gray-300 hover:text-white border-l-2 border-transparent hover:border-red-400 relative overflow-hidden"><div class="absolute inset-0 bg-gradient-to-r from-red-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div><span class="relative z-10 flex items-center gap-2"><svg class="w-4 h-4 group-hover:scale-110 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>Cerraduras</span></a></li>
+        <li><a routerLink="/products/seguridad/alarmas" (click)="toggleSidebar()" class="group block p-2 rounded-lg hover:bg-red-500/20 transition-all duration-300 text-sm text-gray-300 hover:text-white border-l-2 border-transparent hover:border-red-400 relative overflow-hidden"><div class="absolute inset-0 bg-gradient-to-r from-red-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div><span class="relative z-10 flex items-center gap-2"><svg class="w-4 h-4 group-hover:scale-110 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-5 5v-5zM4.021 19.071l11.314-11.314"></path></svg>Alarmas</span></a></li>
       </ul>
     </li>
 
 
     <li>
-      <a routerLink="/offers" (click)="toggleSidebar()"
-        class="flex items-center gap-3 p-3 rounded-xl hover:bg-gradient-to-r hover:from-red-500/20 hover:to-orange-500/20 transition-all duration-300 font-medium border border-transparent hover:border-red-400/50">
-        <span class="text-xl animate-pulse">🔥</span>
-        <span class="text-red-400 font-bold">Ofertas Especiales</span>
+      <a routerLink="/offers" (click)="toggleSidebar()" 
+         class="group flex items-center gap-3 p-3 rounded-xl hover:bg-gradient-to-r hover:from-red-500/20 hover:to-orange-500/20 transition-all duration-300 font-medium border border-transparent hover:border-red-400/50 relative overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-r from-red-500/10 via-orange-500/10 to-yellow-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+        <div class="relative z-10 group-hover:scale-125 transition-transform duration-300 p-1 bg-red-500/20 rounded-lg group-hover:bg-red-500/30">
+          <svg class="w-5 h-5 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 18.657A8 8 0 016.343 7.343S7 9 9 10c0-2 .5-5 2.986-7C14 5 16.09 5.777 17.656 7.343A7.975 7.975 0 0120 13a7.975 7.975 0 01-2.343 5.657z"></path>
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.879 16.121A3 3 0 1012.015 11L11 14H9c0 .768.293 1.536.879 2.121z"></path>
+          </svg>
+        </div>
+        <span class="text-red-400 font-bold relative z-10 group-hover:text-red-300 transition-colors duration-300">Ofertas Especiales</span>
+        <div class="absolute right-2 top-1/2 -translate-y-1/2 bg-red-500 text-white text-xs px-2 py-1 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+          ¡HOT!
+        </div>
       </a>
     </li>
   </ul>
 </div>
 
 
-<div *ngIf="isSidebarOpen"
-  class="overlay fixed inset-0 bg-black/60 backdrop-blur-sm z-[1100] transition-all duration-300"
-  (click)="toggleSidebar()">
+<div *ngIf="isSidebarOpen" 
+     class="overlay fixed inset-0 bg-black/60 backdrop-blur-sm z-[1100] transition-all duration-300" 
+     (click)="toggleSidebar()">
 </div>
