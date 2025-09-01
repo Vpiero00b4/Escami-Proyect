@@ -30,4 +30,8 @@ export class MacList implements OnInit {
     this.producService.getproductosCategoria(this.idSubcategoria)
       .subscribe(res => this.productos = res);
   }
+  onImageError(event: any): void {
+  event.target.src = '/assets/images/producto-placeholder.jpg';
+}
+
 }

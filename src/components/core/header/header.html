@@ -1,58 +1,98 @@
-<!-- Header Principal -->
-<header class="header">
-  <div class="header-container">
-    <!-- Botón + Logo -->
-    <div class="header-left">
-      <button class="menu-btn" (click)="toggleSidebar()">
-        @if (!isSidebarOpen) {
-        <span>☰</span>
-        } @else {
-        <span>✖</span>
-        }
+
+<header class="sticky top-0 z-[1100] bg-gradient-to-br from-slate-800 via-slate-700 to-slate-900 text-white shadow-2xl border-b border-slate-600/50 backdrop-blur-sm">
+  <div class="flex items-center justify-between gap-6 p-4 md:p-6 max-w-7xl mx-auto">
+
+
+    <div class="flex items-center gap-4">
+      <button (click)="toggleSidebar()"
+              class="group bg-gradient-to-br from-blue-500 to-blue-700 text-white text-lg font-bold px-4 py-3 rounded-2xl shadow-lg hover:from-blue-600 hover:to-blue-800 hover:-translate-y-1 hover:shadow-xl transition-all duration-300 border border-blue-400/20">
+        <span *ngIf="!isSidebarOpen" class="group-hover:rotate-90 transition-transform duration-300">☰</span>
+        <span *ngIf="isSidebarOpen" class="group-hover:rotate-180 transition-transform duration-300">✖</span>
       </button>
-      <a routerLink="/" class="logo">🛍️ Marketplace</a>
-    </div>
-
-    <!-- Barra de búsqueda -->
-    <div class="search-bar">
-      <input type="text" class="search-input" placeholder="Buscar productos..." />
-      <button class="search-btn"><span class="icon">🔍</span></button>
-    </div>
-
-    <!-- Acciones -->
-    <div class="header-actions">
-      <a routerLink="/login" class="header-btn">👤 Iniciar Sesión</a>
-      <a routerLink="/cart" class="header-btn cart-btn">
-        🛒 Carrito
-        <span class="cart-badge">3</span>
+      <a routerLink="/" class="flex items-center gap-2 text-xl md:text-2xl font-bold text-white hover:text-blue-400 transition-colors duration-300">
+        <span class="text-2xl">🛍️</span>
+        <span class="bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">Marketplace</span>
       </a>
     </div>
+
+
+    <div class="flex flex-1 max-w-2xl bg-white/95 backdrop-blur-sm rounded-2xl border-2 border-gray-200 shadow-lg overflow-hidden focus-within:border-blue-500 focus-within:shadow-xl focus-within:bg-white transition-all duration-300">
+      <input type="text" 
+             placeholder="Buscar productos, marcas, categorías..." 
+             class="flex-1 px-6 py-3 text-gray-800 placeholder-gray-500 focus:outline-none bg-transparent font-medium"/>
+      <button class="bg-gradient-to-br from-blue-500 to-blue-700 text-white px-6 py-3 hover:from-blue-600 hover:to-blue-800 transition-all duration-300 font-semibold">
+        <span class="text-lg">🔍</span>
+      </button>
+    </div>
+
+
+    <div class="flex items-center gap-3">
+      <a routerLink="/login" 
+         class="flex items-center gap-2 text-white font-semibold px-4 py-2 rounded-xl border border-white/20 hover:bg-white/10 hover:border-white/40 hover:shadow-lg transition-all duration-300 backdrop-blur-sm">
+        <span class="text-lg">👤</span>
+        <span class="hidden md:inline">Iniciar Sesión</span>
+      </a>
+      <a routerLink="/cart" 
+         class="relative flex items-center gap-2 text-white font-semibold px-4 py-2 rounded-xl border border-white/20 hover:bg-white/10 hover:border-white/40 hover:shadow-lg transition-all duration-300 backdrop-blur-sm">
+        <span class="text-lg">🛒</span>
+        <span class="hidden md:inline">Carrito</span>
+        <span class="absolute -top-2 -right-2 bg-gradient-to-br from-red-500 to-red-700 text-white text-xs font-bold rounded-full px-2 py-1 shadow-lg animate-pulse border-2 border-white">3</span>
+      </a>
+    </div>
+
   </div>
 </header>
 
-<!-- Sidebar -->
-<div class="sidebar" [class.open]="isSidebarOpen">
-  <button class="close-btn" (click)="toggleSidebar()">✖</button>
 
-  <ul class="sidebar-nav">
-    <li><a routerLink="/" (click)="toggleSidebar()">🏠 Inicio</a></li>
+<div class="sidebar fixed top-0 left-0 h-full w-80 bg-gradient-to-b from-slate-900 via-slate-800 to-slate-900 text-white shadow-2xl transform -translate-x-full transition-transform duration-300 ease-in-out z-[1200] border-r border-slate-600/50"
+     [class.translate-x-0]="isSidebarOpen"
+     [class.-translate-x-full]="!isSidebarOpen">
+  
 
-    <!-- 📚 LIBROS dinámico -->
+  <div class="flex items-center justify-between p-6 border-b border-slate-600/50 bg-gradient-to-r from-slate-800 to-slate-700">
+    <h2 class="text-xl font-bold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">Categorías</h2>
+    <button (click)="toggleSidebar()" 
+            class="text-white hover:text-red-400 text-2xl font-bold p-2 rounded-xl hover:bg-red-500/10 transition-all duration-300">
+      ✖
+    </button>
+  </div>
+
+
+  <ul class="sidebar-nav p-4 space-y-2 overflow-y-auto h-full pb-20">
+    
+
+    <li>
+      <a routerLink="/" (click)="toggleSidebar()" 
+         class="flex items-center gap-3 p-3 rounded-xl hover:bg-slate-700/50 transition-all duration-300 font-medium border border-transparent hover:border-slate-600/50">
+        <span class="text-xl">🏠</span>
+        <span>Inicio</span>
+      </a>
+    </li>
+
+
     <li class="dropdown">
-      <div class="dropdown-header" (click)="toggleEmpresa('libros')">
-        <span>📚 Libros</span>
-        <span class="arrow" [class.open]="empresaAbierta === 'libros'">▶</span>
+      <div class="dropdown-header flex items-center justify-between p-3 rounded-xl hover:bg-slate-700/50 cursor-pointer transition-all duration-300 font-medium border border-transparent hover:border-slate-600/50" 
+           (click)="toggleEmpresa('libros')">
+        <div class="flex items-center gap-3">
+          <span class="text-xl">📚</span>
+          <span>Libros</span>
+        </div>
+        <span class="arrow text-blue-400 transition-transform duration-300 text-lg" 
+              [class.rotate-90]="empresaAbierta === 'libros'">▶</span>
       </div>
-      <ul class="dropdown-menu" *ngIf="empresaAbierta === 'libros'">
+      <ul class="dropdown-menu ml-4 mt-2 space-y-1" *ngIf="empresaAbierta === 'libros'">
         <li *ngFor="let cat of categorias" class="dropdown-sub">
-          <div class="sub-header" (click)="toggleCategoria(cat.idCategoria)">
-            {{ cat.categoria1 }}
-            <span class="arrow" [class.open]="categoriaAbierta === cat.idCategoria">▶</span>
+          <div class="sub-header flex items-center justify-between p-2 rounded-lg hover:bg-slate-600/30 cursor-pointer transition-all duration-300 text-sm font-medium" 
+               (click)="toggleCategoria(cat.idCategoria)">
+            <span class="text-blue-300">{{ cat.categoria1 }}</span>
+            <span class="arrow text-blue-400 transition-transform duration-300" 
+                  [class.rotate-90]="categoriaAbierta === cat.idCategoria">▶</span>
           </div>
-          <ul class="dropdown-submenu" *ngIf="categoriaAbierta === cat.idCategoria">
+          <ul class="dropdown-submenu ml-4 mt-1 space-y-1" *ngIf="categoriaAbierta === cat.idCategoria">
             <li *ngFor="let sub of getSubcategoriasByCategoria(cat.idCategoria)">
               <a [routerLink]="['/macProductos', cat.categoria1.toLowerCase(), sub.descripcion.toLowerCase()]"
-                (click)="toggleSidebar()">
+                 (click)="toggleSidebar()"
+                 class="block p-2 rounded-lg hover:bg-blue-500/20 transition-all duration-300 text-sm text-gray-300 hover:text-white border-l-2 border-transparent hover:border-blue-400">
                 {{ sub.descripcion }}
               </a>
             </li>
@@ -60,22 +100,31 @@
         </li>
       </ul>
     </li>
-    <!-- 🍎 Mac -->
+
+
     <li class="dropdown">
-      <div class="dropdown-header" (click)="toggleEmpresa('mac')">
-        <span>🍎 Mac</span>
-        <span class="arrow" [class.open]="empresaAbierta === 'mac'">▶</span>
+      <div class="dropdown-header flex items-center justify-between p-3 rounded-xl hover:bg-slate-700/50 cursor-pointer transition-all duration-300 font-medium border border-transparent hover:border-slate-600/50" 
+           (click)="toggleEmpresa('mac')">
+        <div class="flex items-center gap-3">
+          <span class="text-xl">🍎</span>
+          <span>Tiendas Mac</span>
+        </div>
+        <span class="arrow text-blue-400 transition-transform duration-300 text-lg" 
+              [class.rotate-90]="empresaAbierta === 'mac'">▶</span>
       </div>
-      <ul class="dropdown-menu" *ngIf="empresaAbierta === 'mac'">
+      <ul class="dropdown-menu ml-4 mt-2 space-y-1" *ngIf="empresaAbierta === 'mac'">
         <li *ngFor="let macat of maccategorias" class="dropdown-sub">
-          <div class="sub-header" (click)="toggleCategoria(macat.idCategoria)">
-            {{ macat.nombre }}
-            <span class="arrow" [class.open]="categoriaAbierta === macat.idCategoria">▶</span>
+          <div class="sub-header flex items-center justify-between p-2 rounded-lg hover:bg-slate-600/30 cursor-pointer transition-all duration-300 text-sm font-medium" 
+               (click)="toggleCategoria(macat.idCategoria)">
+            <span class="text-blue-300">{{ macat.nombre }}</span>
+            <span class="arrow text-blue-400 transition-transform duration-300" 
+                  [class.rotate-90]="categoriaAbierta === macat.idCategoria">▶</span>
           </div>
-          <ul class="dropdown-submenu" *ngIf="categoriaAbierta === macat.idCategoria">
+          <ul class="dropdown-submenu ml-4 mt-1 space-y-1" *ngIf="categoriaAbierta === macat.idCategoria">
             <li *ngFor="let sub of macat.subcategorias">
               <a [routerLink]="['/home/macProductos', macat.nombre.toLowerCase(), sub.nombre.toLowerCase(), sub.id]"
-                (click)="toggleSidebar()">
+                 (click)="toggleSidebar()"
+                 class="block p-2 rounded-lg hover:bg-blue-500/20 transition-all duration-300 text-sm text-gray-300 hover:text-white border-l-2 border-transparent hover:border-blue-400">
                 {{ sub.nombre }}
               </a>
             </li>
@@ -85,88 +134,120 @@
     </li>
 
 
-    <!-- 👟 Calzados -->
     <li class="dropdown">
-      <div class="dropdown-header" (click)="toggleEmpresa('calzados')">
-        <span>👟 Calzados</span>
-        <span class="arrow" [class.open]="empresaAbierta === 'calzados'">▶</span>
+      <div class="dropdown-header flex items-center justify-between p-3 rounded-xl hover:bg-slate-700/50 cursor-pointer transition-all duration-300 font-medium border border-transparent hover:border-slate-600/50" 
+           (click)="toggleEmpresa('calzados')">
+        <div class="flex items-center gap-3">
+          <span class="text-xl">👟</span>
+          <span>Calzados</span>
+        </div>
+        <span class="arrow text-blue-400 transition-transform duration-300 text-lg" 
+              [class.rotate-90]="empresaAbierta === 'calzados'">▶</span>
       </div>
-      <ul class="dropdown-menu" *ngIf="empresaAbierta === 'calzados'">
+      <ul class="dropdown-menu ml-4 mt-2 space-y-1" *ngIf="empresaAbierta === 'calzados'">
+        
+
         <li class="dropdown-sub">
-          <div class="sub-header" (click)="toggleCategoria(1)">
-            Hombres
-            <span class="arrow" [class.open]="categoriaAbierta === 1">▶</span>
+          <div class="sub-header flex items-center justify-between p-2 rounded-lg hover:bg-slate-600/30 cursor-pointer transition-all duration-300 text-sm font-medium" 
+               (click)="toggleCategoria(1)">
+            <span class="text-blue-300">👨 Hombres</span>
+            <span class="arrow text-blue-400 transition-transform duration-300" 
+                  [class.rotate-90]="categoriaAbierta === 1">▶</span>
           </div>
-          <ul class="dropdown-submenu" *ngIf="categoriaAbierta === 1">
-            <li><a routerLink="/products/calzados/hombres/i-run" (click)="toggleSidebar()">I-RUN</a></li>
-            <li><a routerLink="/products/calzados/hombres/nike" (click)="toggleSidebar()">Nike</a></li>
-            <li><a routerLink="/products/calzados/hombres/adidas" (click)="toggleSidebar()">Adidas</a></li>
-            <li><a routerLink="/products/calzados/hombres/puma" (click)="toggleSidebar()">Puma</a></li>
-            <li><a routerLink="/products/calzados/hombres/reebok" (click)="toggleSidebar()">Reebok</a></li>
+          <ul class="dropdown-submenu ml-4 mt-1 space-y-1" *ngIf="categoriaAbierta === 1">
+            <li><a routerLink="/products/calzados/hombres/i-run" (click)="toggleSidebar()" class="block p-2 rounded-lg hover:bg-blue-500/20 transition-all duration-300 text-sm text-gray-300 hover:text-white border-l-2 border-transparent hover:border-blue-400">I-RUN</a></li>
+            <li><a routerLink="/products/calzados/hombres/nike" (click)="toggleSidebar()" class="block p-2 rounded-lg hover:bg-blue-500/20 transition-all duration-300 text-sm text-gray-300 hover:text-white border-l-2 border-transparent hover:border-blue-400">Nike</a></li>
+            <li><a routerLink="/products/calzados/hombres/adidas" (click)="toggleSidebar()" class="block p-2 rounded-lg hover:bg-blue-500/20 transition-all duration-300 text-sm text-gray-300 hover:text-white border-l-2 border-transparent hover:border-blue-400">Adidas</a></li>
+            <li><a routerLink="/products/calzados/hombres/puma" (click)="toggleSidebar()" class="block p-2 rounded-lg hover:bg-blue-500/20 transition-all duration-300 text-sm text-gray-300 hover:text-white border-l-2 border-transparent hover:border-blue-400">Puma</a></li>
+            <li><a routerLink="/products/calzados/hombres/reebok" (click)="toggleSidebar()" class="block p-2 rounded-lg hover:bg-blue-500/20 transition-all duration-300 text-sm text-gray-300 hover:text-white border-l-2 border-transparent hover:border-blue-400">Reebok</a></li>
           </ul>
         </li>
 
+
         <li class="dropdown-sub">
-          <div class="sub-header" (click)="toggleCategoria(2)">
-            Mujeres
-            <span class="arrow" [class.open]="categoriaAbierta === 2">▶</span>
+          <div class="sub-header flex items-center justify-between p-2 rounded-lg hover:bg-slate-600/30 cursor-pointer transition-all duration-300 text-sm font-medium" 
+               (click)="toggleCategoria(2)">
+            <span class="text-pink-300">👩 Mujeres</span>
+            <span class="arrow text-blue-400 transition-transform duration-300" 
+                  [class.rotate-90]="categoriaAbierta === 2">▶</span>
           </div>
-          <ul class="dropdown-submenu" *ngIf="categoriaAbierta === 2">
-            <li><a routerLink="/products/calzados/mujeres/i-run" (click)="toggleSidebar()">I-RUN</a></li>
-            <li><a routerLink="/products/calzados/mujeres/nike" (click)="toggleSidebar()">Nike</a></li>
-            <li><a routerLink="/products/calzados/mujeres/adidas" (click)="toggleSidebar()">Adidas</a></li>
-            <li><a routerLink="/products/calzados/mujeres/puma" (click)="toggleSidebar()">Puma</a></li>
-            <li><a routerLink="/products/calzados/mujeres/reebok" (click)="toggleSidebar()">Reebok</a></li>
+          <ul class="dropdown-submenu ml-4 mt-1 space-y-1" *ngIf="categoriaAbierta === 2">
+            <li><a routerLink="/products/calzados/mujeres/i-run" (click)="toggleSidebar()" class="block p-2 rounded-lg hover:bg-pink-500/20 transition-all duration-300 text-sm text-gray-300 hover:text-white border-l-2 border-transparent hover:border-pink-400">I-RUN</a></li>
+            <li><a routerLink="/products/calzados/mujeres/nike" (click)="toggleSidebar()" class="block p-2 rounded-lg hover:bg-pink-500/20 transition-all duration-300 text-sm text-gray-300 hover:text-white border-l-2 border-transparent hover:border-pink-400">Nike</a></li>
+            <li><a routerLink="/products/calzados/mujeres/adidas" (click)="toggleSidebar()" class="block p-2 rounded-lg hover:bg-pink-500/20 transition-all duration-300 text-sm text-gray-300 hover:text-white border-l-2 border-transparent hover:border-pink-400">Adidas</a></li>
+            <li><a routerLink="/products/calzados/mujeres/puma" (click)="toggleSidebar()" class="block p-2 rounded-lg hover:bg-pink-500/20 transition-all duration-300 text-sm text-gray-300 hover:text-white border-l-2 border-transparent hover:border-pink-400">Puma</a></li>
+            <li><a routerLink="/products/calzados/mujeres/reebok" (click)="toggleSidebar()" class="block p-2 rounded-lg hover:bg-pink-500/20 transition-all duration-300 text-sm text-gray-300 hover:text-white border-l-2 border-transparent hover:border-pink-400">Reebok</a></li>
           </ul>
         </li>
 
+
         <li class="dropdown-sub">
-          <div class="sub-header" (click)="toggleCategoria(3)">
-            Infantil
-            <span class="arrow" [class.open]="categoriaAbierta === 3">▶</span>
+          <div class="sub-header flex items-center justify-between p-2 rounded-lg hover:bg-slate-600/30 cursor-pointer transition-all duration-300 text-sm font-medium" 
+               (click)="toggleCategoria(3)">
+            <span class="text-yellow-300">👶 Infantil</span>
+            <span class="arrow text-blue-400 transition-transform duration-300" 
+                  [class.rotate-90]="categoriaAbierta === 3">▶</span>
           </div>
-          <ul class="dropdown-submenu" *ngIf="categoriaAbierta === 3">
-            <li><a routerLink="/products/calzados/infantil/i-run" (click)="toggleSidebar()">I-RUN</a></li>
-            <li><a routerLink="/products/calzados/infantil/nike" (click)="toggleSidebar()">Nike</a></li>
-            <li><a routerLink="/products/calzados/infantil/adidas" (click)="toggleSidebar()">Adidas</a></li>
-            <li><a routerLink="/products/calzados/infantil/puma" (click)="toggleSidebar()">Puma</a></li>
-            <li><a routerLink="/products/calzados/infantil/reebok" (click)="toggleSidebar()">Reebok</a></li>
+          <ul class="dropdown-submenu ml-4 mt-1 space-y-1" *ngIf="categoriaAbierta === 3">
+            <li><a routerLink="/products/calzados/infantil/i-run" (click)="toggleSidebar()" class="block p-2 rounded-lg hover:bg-yellow-500/20 transition-all duration-300 text-sm text-gray-300 hover:text-white border-l-2 border-transparent hover:border-yellow-400">I-RUN</a></li>
+            <li><a routerLink="/products/calzados/infantil/nike" (click)="toggleSidebar()" class="block p-2 rounded-lg hover:bg-yellow-500/20 transition-all duration-300 text-sm text-gray-300 hover:text-white border-l-2 border-transparent hover:border-yellow-400">Nike</a></li>
+            <li><a routerLink="/products/calzados/infantil/adidas" (click)="toggleSidebar()" class="block p-2 rounded-lg hover:bg-yellow-500/20 transition-all duration-300 text-sm text-gray-300 hover:text-white border-l-2 border-transparent hover:border-yellow-400">Adidas</a></li>
+            <li><a routerLink="/products/calzados/infantil/puma" (click)="toggleSidebar()" class="block p-2 rounded-lg hover:bg-yellow-500/20 transition-all duration-300 text-sm text-gray-300 hover:text-white border-l-2 border-transparent hover:border-yellow-400">Puma</a></li>
+            <li><a routerLink="/products/calzados/infantil/reebok" (click)="toggleSidebar()" class="block p-2 rounded-lg hover:bg-yellow-500/20 transition-all duration-300 text-sm text-gray-300 hover:text-white border-l-2 border-transparent hover:border-yellow-400">Reebok</a></li>
           </ul>
         </li>
       </ul>
     </li>
 
-    <!-- 🐾 Mascotas -->
+
     <li class="dropdown">
-      <div class="dropdown-header" (click)="toggleEmpresa('mascotas')">
-        <span>🐾 Mascotas</span>
-        <span class="arrow" [class.open]="empresaAbierta === 'mascotas'">▶</span>
+      <div class="dropdown-header flex items-center justify-between p-3 rounded-xl hover:bg-slate-700/50 cursor-pointer transition-all duration-300 font-medium border border-transparent hover:border-slate-600/50" 
+           (click)="toggleEmpresa('mascotas')">
+        <div class="flex items-center gap-3">
+          <span class="text-xl">🐾</span>
+          <span>Mascotas</span>
+        </div>
+        <span class="arrow text-blue-400 transition-transform duration-300 text-lg" 
+              [class.rotate-90]="empresaAbierta === 'mascotas'">▶</span>
       </div>
-      <ul class="dropdown-menu" *ngIf="empresaAbierta === 'mascotas'">
-        <li><a routerLink="/products/mascotas/alimentos" (click)="toggleSidebar()">Alimentos</a></li>
-        <li><a routerLink="/products/mascotas/accesorios" (click)="toggleSidebar()">Accesorios</a></li>
-        <li><a routerLink="/products/mascotas/juguetes" (click)="toggleSidebar()">Juguetes</a></li>
+      <ul class="dropdown-menu ml-4 mt-2 space-y-1" *ngIf="empresaAbierta === 'mascotas'">
+        <li><a routerLink="/products/mascotas/alimentos" (click)="toggleSidebar()" class="block p-2 rounded-lg hover:bg-green-500/20 transition-all duration-300 text-sm text-gray-300 hover:text-white border-l-2 border-transparent hover:border-green-400">🍖 Alimentos</a></li>
+        <li><a routerLink="/products/mascotas/accesorios" (click)="toggleSidebar()" class="block p-2 rounded-lg hover:bg-green-500/20 transition-all duration-300 text-sm text-gray-300 hover:text-white border-l-2 border-transparent hover:border-green-400">🎾 Accesorios</a></li>
+        <li><a routerLink="/products/mascotas/juguetes" (click)="toggleSidebar()" class="block p-2 rounded-lg hover:bg-green-500/20 transition-all duration-300 text-sm text-gray-300 hover:text-white border-l-2 border-transparent hover:border-green-400">🧸 Juguetes</a></li>
       </ul>
     </li>
 
-    <!-- 🛡️ Seguridad -->
+
     <li class="dropdown">
-      <div class="dropdown-header" (click)="toggleEmpresa('seguridad')">
-        <span>🛡️ Seguridad</span>
-        <span class="arrow" [class.open]="empresaAbierta === 'seguridad'">▶</span>
+      <div class="dropdown-header flex items-center justify-between p-3 rounded-xl hover:bg-slate-700/50 cursor-pointer transition-all duration-300 font-medium border border-transparent hover:border-slate-600/50" 
+           (click)="toggleEmpresa('seguridad')">
+        <div class="flex items-center gap-3">
+          <span class="text-xl">🛡️</span>
+          <span>Seguridad</span>
+        </div>
+        <span class="arrow text-blue-400 transition-transform duration-300 text-lg" 
+              [class.rotate-90]="empresaAbierta === 'seguridad'">▶</span>
       </div>
-      <ul class="dropdown-menu" *ngIf="empresaAbierta === 'seguridad'">
-        <li><a routerLink="/products/seguridad/camaras" (click)="toggleSidebar()">Cámaras</a></li>
-        <li><a routerLink="/products/seguridad/cerraduras" (click)="toggleSidebar()">Cerraduras</a></li>
-        <li><a routerLink="/products/seguridad/alarmas" (click)="toggleSidebar()">Alarmas</a></li>
+      <ul class="dropdown-menu ml-4 mt-2 space-y-1" *ngIf="empresaAbierta === 'seguridad'">
+        <li><a routerLink="/products/seguridad/camaras" (click)="toggleSidebar()" class="block p-2 rounded-lg hover:bg-red-500/20 transition-all duration-300 text-sm text-gray-300 hover:text-white border-l-2 border-transparent hover:border-red-400">📹 Cámaras</a></li>
+        <li><a routerLink="/products/seguridad/cerraduras" (click)="toggleSidebar()" class="block p-2 rounded-lg hover:bg-red-500/20 transition-all duration-300 text-sm text-gray-300 hover:text-white border-l-2 border-transparent hover:border-red-400">🔐 Cerraduras</a></li>
+        <li><a routerLink="/products/seguridad/alarmas" (click)="toggleSidebar()" class="block p-2 rounded-lg hover:bg-red-500/20 transition-all duration-300 text-sm text-gray-300 hover:text-white border-l-2 border-transparent hover:border-red-400">🚨 Alarmas</a></li>
       </ul>
     </li>
 
-    <li><a routerLink="/offers" (click)="toggleSidebar()">🔥 Ofertas</a></li>
+
+    <li>
+      <a routerLink="/offers" (click)="toggleSidebar()" 
+         class="flex items-center gap-3 p-3 rounded-xl hover:bg-gradient-to-r hover:from-red-500/20 hover:to-orange-500/20 transition-all duration-300 font-medium border border-transparent hover:border-red-400/50">
+        <span class="text-xl animate-pulse">🔥</span>
+        <span class="text-red-400 font-bold">Ofertas Especiales</span>
+      </a>
+    </li>
   </ul>
 </div>
 
-<!-- Overlay -->
-@if (isSidebarOpen) {
-<div class="overlay" (click)="toggleSidebar()"></div>
-}
+
+<div *ngIf="isSidebarOpen" 
+     class="overlay fixed inset-0 bg-black/60 backdrop-blur-sm z-[1100] transition-all duration-300" 
+     (click)="toggleSidebar()">
+</div>

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, NgFor } from '@angular/common';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { Categoria } from '../../../models/libros/categoria';
 import { Subcategoria } from '../../../models/libros/subcategoria';
