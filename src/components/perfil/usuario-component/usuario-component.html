@@ -1,0 +1,39 @@
+<div class="ventas-container p-4">
+  <h2 class="text-2xl font-bold mb-4">Ventas del Usuario</h2>
+
+  <div *ngIf="ventas.length === 0" class="text-gray-500">
+    No se encontraron ventas.
+  </div>
+
+  <div *ngFor="let venta of ventas" class="venta-card border p-4 mb-4 rounded shadow">
+    <div class="venta-header mb-2">
+      <p><strong>ID Venta:</strong> {{ venta.idVenta }}</p>
+      <p><strong>Fecha:</strong> {{ venta.fechaVenta | date:'short' }}</p>
+      <p><strong>Total:</strong> S/. {{ venta.total }}</p>
+      <p><strong>Estado:</strong> {{ venta.estado }}</p>
+      <p><strong>Cliente:</strong> {{ venta.cliente }}</p>
+    </div>
+
+    <div class="detalles-venta mt-2">
+      <h3 class="font-semibold mb-1">Detalles:</h3>
+      <table class="w-full border-collapse">
+        <thead>
+          <tr class="bg-gray-100">
+            <th class="border px-2 py-1 text-left">Producto</th>
+            <th class="border px-2 py-1 text-left">Cantidad</th>
+            <th class="border px-2 py-1 text-left">Precio Unitario</th>
+            <th class="border px-2 py-1 text-left">Subtotal</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let det of venta.detalles">
+            <td class="border px-2 py-1">{{ det.producto }}</td>
+            <td class="border px-2 py-1">{{ det.cantidad }}</td>
+            <td class="border px-2 py-1">S/. {{ det.precioUnitario }}</td>
+            <td class="border px-2 py-1">S/. {{ det.subtotal }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

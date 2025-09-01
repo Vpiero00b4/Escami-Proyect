@@ -4,6 +4,7 @@ import { CalzadoList } from './components/features/calzados/calzado-list/calzado
 import { EmptyHomeComponent } from '../components/EmptyHomeComponent';
 import { HomeComponent } from '../components/home.component';
 import { MacList } from './components/features/mac/mac-list/mac-list';
+import { UsuarioComponent } from '../components/perfil/usuario-component/usuario-component';
 
 export const routes: Routes = [
   {
@@ -11,9 +12,10 @@ export const routes: Routes = [
     component: HomeComponent,
     children: [
       { path: 'libros/subcategoria/:idSubcategoria', component: LibroList },
-      { path: 'libros', component: LibroList }, 
+      { path: 'libros', component: LibroList },
       { path: 'calzados', component: CalzadoList },
-      { path: '', component: EmptyHomeComponent },     
+      { path: 'Perfil', component: UsuarioComponent },
+      { path: '', component: EmptyHomeComponent },
       // 🍏 Ruta dinámica para mac
       { path: 'macProductos/:categoriaMac/:subcategoriaMac/:idSubcategoria', component: MacList }
     ]
